@@ -2,11 +2,11 @@ import Link from 'next/link'
 
 export default function Home() {
 	return (
-		<>
-			<h1>Home Page</h1>
+		<div className='min-h-screen flex gap-4 flex-col items-center justify-center'>
+			<h1 className='font-bold text-3xl'>Home Page</h1>
 
 			<nav>
-				<ul>
+				<ul className='[&>*:hover]:underline [&>*]:text-center'>
 					<li>
 						<Link href='/dashboard'>Dashboard</Link>
 					</li>
@@ -27,6 +27,6 @@ export default function Home() {
 					</li>
 				</ul>
 			</nav>
-		</>
+		</div>
 	)
 }
