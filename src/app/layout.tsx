@@ -5,12 +5,12 @@ import './globals.css'
 const sansationFont = localFont({
 	src: [
 		{
-			path: './ssot/assets/fonts/Sansation-Regular.woff',
+			path: '../ssot/assets/fonts/Sansation-Regular.woff',
 			weight: '400',
 			style: 'normal',
 		},
 		{
-			path: './ssot/assets/fonts/Sansation-Bold.woff',
+			path: '../ssot/assets/fonts/Sansation-Bold.woff',
 			weight: '700',
 			style: 'normal',
 		},

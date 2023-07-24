@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { StudyLogo } from './components/icons/StudyLogo'
+
+import { StudyLogo } from 'components/icons/StudyLogo'
 
 export default function Home() {
 	return (
