@@ -2,33 +2,23 @@
 
 import Link from 'next/link'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
-
-const inputs = [
-	{
-		id: 'username',
-		title: 'Username',
-		type: 'text',
-		required: true,
-	},
-	{
-		id: 'password',
-		title: 'Password',
-		type: 'password',
-		required: true,
-	},
-]
+import { Button, Divider, Input } from '@nextui-org/react'
+import { StudyLogo } from 'components/icons/StudyLogo'
+import { GoogleIcon } from 'components/icons/GoogleIcon'
+import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
+import { EyeIcon } from 'components/icons/EyeIcon'
 
 interface ILoginForm {
-	username: string
+	email: string
 	password: string
 }
 
 export default function LoginPage() {
-	const [formValues, setValues] = useState<ILoginForm | {}>({
-		username: '',
+	const [formValues, setValues] = useState<ILoginForm>({
 		email: '',
 		password: '',
 	})
+	const [isVisible, setIsVisible] = useState<boolean>(false)
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
 		setValues({ ...formValues, [e.target.name]: e.target.value })
@@ -40,49 +30,84 @@ export default function LoginPage() {
 		console.log(formValues)
 
 		setValues({
-			username: '',
 			email: '',
 			password: '',
 		})
 	}
 
+	const toggleVisibility = () => setIsVisible(!isVisible)
+
 	return (
-		<>
-			<div className='flex h-screen bg-gray-100'>
-				<div className='m-auto p-10 bg-white shadow-md rounded-md'>
-					<h1 className='text-3xl font-bold mb-4 text-gray-700'>Login</h1>
-					<form onSubmit={handleSubmit}>
-						{inputs.map((input, index) => {
-							return (
-								<div className='mb-4' key={index}>
-									<label
-										htmlFor={input.id}
-										className='block text-gray-700 font-bold mb-2'
-									>
-										{input.title}
-									</label>
-									<input
-										onChange={handleChange}
-										type={input.type}
-										name={input.id}
-										value={formValues[input.id as keyof typeof formValues]}
-										id={input.id}
-										className='w-[400px] border rounded-md px-3 py-2 focus:outline-none focus:border-blue-500 text-gray-700'
-										required={input.required}
-									/>
-								</div>
-							)
-						})}
-						<button
-							type='submit'
-							className='w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600'
-						>
-							Log in
+		<div className='w-[400px] flex flex-col items-center'>
+			<StudyLogo width={250} height={70} />
+
+			<form
+				onSubmit={handleSubmit}
+				className='w-full flex flex-col gap-[16px] mt-[32px]'
+			>
+				<Input
+					onChange={handleChange}
+					value={formValues.email}
+					type='email'
+					name='email'
+					required
+					variant='underlined'
+					label='Email'
+				/>
+
+				<Input
+					onChange={handleChange}
+					value={formValues.password}
+					type={isVisible ? 'text' : 'password'}
+					name='password'
+					required
+					variant='underlined'
+					label='Password'
+					endContent={
+						<button type='button' onClick={toggleVisibility}>
+							{isVisible ? (
+								<EyeSlashIcon
+									height='16'
+									width='16'
+									className='pointer-events-none stroke-slate-400'
+								/>
+							) : (
+								<EyeIcon
+									height='16'
+									width='16'
+									className='pointer-events-none stroke-slate-400'
+								/>
+							)}
 						</button>
-					</form>
-					<Link href='/register'>Rgister</Link>
-				</div>
+					}
+				/>
+
+				<Button
+					variant='solid'
+					color='primary'
+					type='submit'
+					className='font-bold text-white rounded-[4px]'
+				>
+					Log In
+				</Button>
+			</form>
+
+			<span className='underline text-xs mt-[8px]'>Forgot your password?</span>
+
+			<div className='w-full flex justify-between items-center mt-[32px] mb-[16px]'>
+				<div className='h-[3px] bg-slate-200 w-[45%]'></div>
+				<span className='font-bold'>o</span>
+				<div className='h-[3px] bg-slate-200 w-[45%]'></div>
 			</div>
-		</>
+
+			<Button
+				isIconOnly
+				aria-label='Login with Google'
+				variant='bordered'
+				className='rounded-full'
+			>
+				<GoogleIcon width='16px' height='16px' />
+			</Button>
+		</div>
 	)
 }

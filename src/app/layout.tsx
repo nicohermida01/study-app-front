@@ -1,5 +1,5 @@
 import localFont from 'next/font/local'
-
+import { Providers } from './providers'
 import './globals.css'
 
 const sansationFont = localFont({
@@ -29,7 +29,9 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en' className={sansationFont.className}>
-			<body className=''>{children}</body>
+			<body className='h-screen w-full'>
+				<Providers>{children}</Providers>
+			</body>
 		</html>
 	)
 }
