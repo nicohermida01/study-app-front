@@ -13,7 +13,11 @@ module.exports = {
 		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				primary: '#34B1E6',
+			},
+		},
 	},
 	darkMode: 'class',
 	plugins: [

@@ -1,12 +1,11 @@
 'use client'
 
-import Link from 'next/link'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
-import { Button, Divider, Input } from '@nextui-org/react'
+import { Button, Input } from '@nextui-org/react'
 import { StudyLogo } from 'components/icons/StudyLogo'
-import { GoogleIcon } from 'components/icons/GoogleIcon'
 import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { EyeIcon } from 'components/icons/EyeIcon'
+import { GoogleAuth } from 'components/GoogleAuth'
 
 interface ILoginForm {
 	email: string
@@ -41,10 +40,11 @@ export default function LoginPage() {
 		<div className='w-[400px] flex flex-col items-center'>
 			<StudyLogo width={250} height={70} />
 
-			<form
-				onSubmit={handleSubmit}
-				className='w-full flex flex-col gap-[16px] mt-[32px]'
-			>
+			<h2 className='text-primary text-2xl font-bold my-[32px]'>
+				Welcome Back!
+			</h2>
+
+			<form onSubmit={handleSubmit} className='w-full flex flex-col gap-[16px]'>
 				<Input
 					onChange={handleChange}
 					value={formValues.email}
@@ -94,20 +94,7 @@ export default function LoginPage() {
 
 			<span className='underline text-xs mt-[8px]'>Forgot your password?</span>
 
-			<div className='w-full flex justify-between items-center mt-[32px] mb-[16px]'>
-				<div className='h-[3px] bg-slate-200 w-[45%]'></div>
-				<span className='font-bold'>o</span>
-				<div className='h-[3px] bg-slate-200 w-[45%]'></div>
-			</div>
-
-			<Button
-				isIconOnly
-				aria-label='Login with Google'
-				variant='bordered'
-				className='rounded-full'
-			>
-				<GoogleIcon width='16px' height='16px' />
-			</Button>
+			<GoogleAuth />
 		</div>
 	)
 }

@@ -1,44 +1,15 @@
 'use client'
 
+import { Button, Input } from '@nextui-org/react'
+import { GoogleAuth } from 'components/GoogleAuth'
+import { EyeIcon } from 'components/icons/EyeIcon'
+import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
+import { StudyLogo } from 'components/icons/StudyLogo'
 import Link from 'next/link'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { userService } from 'services/user.service'
 
-const inputs = [
-	{
-		id: 'username',
-		title: 'Username',
-		type: 'text',
-		required: true,
-	},
-	{
-		id: 'email',
-		title: 'Email',
-		type: 'email',
-		required: true,
-	},
-	{
-		id: 'password',
-		title: 'Password',
-		type: 'password',
-		required: true,
-	},
-	{
-		id: 'firstName',
-		title: 'First Name',
-		type: 'text',
-		required: false,
-	},
-	{
-		id: 'lastName',
-		title: 'Last Name',
-		type: 'text',
-		required: false,
-	},
-]
-
 interface IRegisterForm {
-	username: string
 	password: string
 	email: string
 	firstName: string
@@ -46,13 +17,13 @@ interface IRegisterForm {
 }
 
 export default function RegisterPage() {
-	const [formValues, setValues] = useState<IRegisterForm | {}>({
-		username: '',
-		email: '',
-		password: '',
+	const [formValues, setValues] = useState<IRegisterForm>({
 		firstName: '',
 		lastName: '',
+		email: '',
+		password: '',
 	})
+	const [isVisible, setIsVisible] = useState<boolean>(false)
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
 		setValues({ ...formValues, [e.target.name]: e.target.value })
@@ -70,51 +41,94 @@ export default function RegisterPage() {
 			.catch(err => console.error(err))
 
 		setValues({
-			username: '',
-			email: '',
-			password: '',
 			firstName: '',
 			lastName: '',
+			email: '',
+			password: '',
 		})
 	}
 
+	const toggleVisibility = () => setIsVisible(!isVisible)
+
 	return (
-		<>
-			<div className='flex h-screen bg-gray-100'>
-				<div className='m-auto p-8 bg-white shadow-md rounded-md'>
-					<h1 className='text-3xl font-bold mb-4 text-gray-700'>Sign Up</h1>
-					<form onSubmit={handleSubmit}>
-						{inputs.map((input, index) => {
-							return (
-								<div className='mb-4' key={index}>
-									<label
-										htmlFor={input.id}
-										className='block text-gray-700 font-bold mb-2'
-									>
-										{input.title}
-									</label>
-									<input
-										onChange={handleChange}
-										value={formValues[input.id as keyof typeof formValues]}
-										type={input.type}
-										id={input.id}
-										className='w-[500px] border rounded-md px-3 py-2 focus:outline-none focus:border-blue-500 text-gray-700'
-										required={input.required}
-										name={input.id}
-									/>
-								</div>
-							)
-						})}
-						<button
-							type='submit'
-							className='w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600'
-						>
-							Sign up
+		<div className='w-[400px] flex flex-col items-center'>
+			<StudyLogo width={250} height={70} />
+
+			<h2 className='text-primary text-2xl font-bold my-[32px]'>
+				Create Account
+			</h2>
+
+			<form onSubmit={handleSubmit} className='w-full flex flex-col gap-[16px]'>
+				<fieldset className='flex gap-[16px]'>
+					<Input
+						onChange={handleChange}
+						value={formValues.firstName}
+						type='text'
+						name='firstName'
+						isRequired
+						variant='underlined'
+						label='First name'
+					/>
+
+					<Input
+						onChange={handleChange}
+						value={formValues.lastName}
+						type='text'
+						name='lastName'
+						isRequired
+						variant='underlined'
+						label='Last name'
+					/>
+				</fieldset>
+
+				<Input
+					onChange={handleChange}
+					value={formValues.email}
+					type='email'
+					name='email'
+					isRequired
+					variant='underlined'
+					label='Email'
+				/>
+
+				<Input
+					onChange={handleChange}
+					value={formValues.password}
+					type={isVisible ? 'text' : 'password'}
+					name='password'
+					isRequired
+					variant='underlined'
+					label='Password'
+					endContent={
+						<button type='button' onClick={toggleVisibility}>
+							{isVisible ? (
+								<EyeSlashIcon
+									height='16'
+									width='16'
+									className='pointer-events-none stroke-slate-400'
+								/>
+							) : (
+								<EyeIcon
+									height='16'
+									width='16'
+									className='pointer-events-none stroke-slate-400'
+								/>
+							)}
 						</button>
-					</form>
-					<Link href='/login'>Login</Link>
-				</div>
-			</div>
-		</>
+					}
+				/>
+
+				<Button
+					variant='solid'
+					color='primary'
+					type='submit'
+					className='font-bold text-white rounded-[4px]'
+				>
+					Sign Up
+				</Button>
+			</form>
+
+			<GoogleAuth />
+		</div>
 	)
 }
