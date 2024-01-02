@@ -1,22 +1,18 @@
-interface ICreateUserDTO {
-	email: string
-	password: string
-	firstName: string
-	lastName: string
-}
+import api from 'httpclients/api'
+import { IUser } from 'interfaces/user.interface'
+import { cookies } from 'next/headers'
 
-const create = async (input: ICreateUserDTO) => {
-	const response = await fetch('http://localhost:8000/users/create', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(input),
+const me = async (): Promise<IUser> => {
+	const cookieStore = cookies()
+	const token = cookieStore.get('accessToken')
+
+	const res = await api.get('/users/me', {
+		headers: { Authorization: `Bearer ${token?.value}` },
 	})
 
-	return await response.json()
+	return res.data
 }
 
 export const userService = {
-	create,
+	me,
 }
