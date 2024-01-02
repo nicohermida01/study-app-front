@@ -7,6 +7,7 @@ import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { StudyLogo } from 'components/icons/StudyLogo'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { authService } from 'services/auth.service'
+import { toast } from 'sonner'
 
 interface IRegisterForm {
 	password: string
@@ -37,8 +38,13 @@ export function RegisterForm() {
 			.registerUser(formValues)
 			.then(res => {
 				// toast
+				toast.success('User successfully created!')
 			})
-			.catch(err => console.error(err))
+			.catch(err => {
+				// move into error wrapper
+				console.error(err)
+				toast.error('Something went wrong. Try again later')
+			})
 
 		setValues(defaultValues)
 	}

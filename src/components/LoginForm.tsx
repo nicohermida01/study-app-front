@@ -8,6 +8,7 @@ import { StudyLogo } from 'components/icons/StudyLogo'
 import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { EyeIcon } from 'components/icons/EyeIcon'
 import { GoogleAuth } from 'components/GoogleAuth'
+import { toast } from 'sonner'
 
 interface ILoginForm {
 	email: string
@@ -35,10 +36,16 @@ export function LoginForm() {
 		authService
 			.loginUser(formValues)
 			.then(res => {
-				// toast
+				toast.success('Successfully logged!', {
+					description: 'Redirecting..',
+				})
 				router.push('/dashboard')
 			})
-			.catch(err => console.error(err))
+			.catch(err => {
+				// move into error wrapper
+				console.error(err)
+				toast.error('Something went wrong. Try again later')
+			})
 
 		setValues({
 			email: '',
