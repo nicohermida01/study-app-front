@@ -24,7 +24,14 @@ const loginUser = async (dto: ILoginAuthDto) => {
 	return res.data
 }
 
+const logoutUser = async () => {
+	const res = await api.get('/auth/logout')
+
+	return res.data
+}
+
 export const authService = {
 	registerUser,
 	loginUser,
+	logoutUser,
 }

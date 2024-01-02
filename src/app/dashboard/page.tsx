@@ -1,3 +1,4 @@
+import { LogoutButton } from 'components/LogoutButton'
 import { userService } from 'services/user.service'
 
 export const metadata = {
@@ -11,6 +12,7 @@ export default async function DashboardPage() {
 		<>
 			<h1>Dashboard</h1>
 			<p>{`Hello ${user.firstName} ${user.lastName}`}</p>
+			<LogoutButton />
 		</>
 	)
 }
