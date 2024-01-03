@@ -13,3 +13,14 @@ body {
 	overflow-x: hidden;
 	min-height: 100vh;
 }
+
+@layer components {
+	.dashboardLayout {
+		display: grid;
+		grid-template-areas:
+			'top top top'
+			'aside main main';
+		grid-template-columns: 200px 1fr;
+		grid-template-rows: auto 1fr;
+	}
+}
