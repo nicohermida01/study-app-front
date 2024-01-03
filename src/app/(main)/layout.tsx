@@ -10,7 +10,7 @@ export default function DashboardLayout({
 		<section className='bg-bg-light min-h-screen dashboardLayout'>
 			<Topbar />
 			<Sidebar />
-			<main className='max-w-[1800px] [grid-area:main] mx-auto w-full p-[32px]'>
+			<main className='max-w-[1800px] [grid-area:main] mx-auto w-full p-[32px] mainContainer'>
 				{children}
 			</main>
 		</section>

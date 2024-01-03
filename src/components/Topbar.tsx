@@ -17,7 +17,7 @@ export function Topbar() {
 					variant='solid'
 					className='rounded-full bg-slate-100'
 				>
-					<MenuIcon width={24} height={24} />
+					<MenuIcon width={24} height={24} className='stroke-light-black' />
 				</Button>
 
 				<StudyLogo width={120} height={44} />
@@ -31,7 +31,11 @@ export function Topbar() {
 						variant='solid'
 						className='rounded-full bg-slate-100'
 					>
-						<MessageIcon width={24} height={24} />
+						<MessageIcon
+							width={24}
+							height={24}
+							className='stroke-light-black'
+						/>
 					</Button>
 
 					<Button
@@ -40,7 +44,11 @@ export function Topbar() {
 						variant='solid'
 						className='rounded-full bg-slate-100'
 					>
-						<NotificationIcon width={24} height={24} />
+						<NotificationIcon
+							width={24}
+							height={24}
+							className='stroke-light-black'
+						/>
 					</Button>
 				</div>
 

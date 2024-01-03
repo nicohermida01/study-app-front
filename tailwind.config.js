@@ -17,6 +17,9 @@ module.exports = {
 			colors: {
 				primary: '#34B1E6',
 				'bg-light': '#F4FAFC',
+				'sidebar-gray': '#888888',
+				'sidebar-active': '#154C63',
+				'light-black': '#333333',
 			},
 		},
 	},

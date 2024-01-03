@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--sidebar-active-color: #154c63;
+	--sidebar-inactive-color: #888888;
+	--primary-color: #34b1e6;
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -22,5 +28,36 @@ body {
 			'aside main main';
 		grid-template-columns: 200px 1fr;
 		grid-template-rows: auto 1fr;
+	}
+
+	.mainContainer {
+		box-shadow: inset 15px 15px 5px -10px rgba(0, 0, 0, 0.05);
+	}
+
+	.navActive {
+		background: rgb(244, 250, 252);
+		background: linear-gradient(
+			90deg,
+			rgba(244, 250, 252, 1) 0%,
+			rgba(244, 250, 252, 0) 100%
+		);
+		color: var(--sidebar-active-color);
+	}
+	.navActive > span {
+		background: var(--primary-color);
+	}
+	.navActive > svg {
+		stroke: var(--primary-color);
+	}
+
+	.navInactive {
+		color: var(--sidebar-inactive-color);
+		background: #fff;
+	}
+	.navInactive > span {
+		background: #fff;
+	}
+	.navInactive > svg {
+		stroke: var(--sidebar-inactive-color);
 	}
 }

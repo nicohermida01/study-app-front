@@ -17,7 +17,7 @@ export function MenuIcon(props: SVGProps<SVGSVGElement>) {
 			<g id='SVGRepo_iconCarrier'>
 				<path
 					d='M4 6H20M4 12H20M4 18H20'
-					stroke='#000000'
+					stroke='inherit'
 					strokeWidth='2'
 					strokeLinecap='round'
 					strokeLinejoin='round'
