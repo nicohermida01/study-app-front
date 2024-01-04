@@ -11,12 +11,12 @@ import { GoogleAuth } from 'components/GoogleAuth'
 import { toast } from 'sonner'
 
 interface ILoginForm {
-	email: string
+	username: string
 	password: string
 }
 
 const defaultValues: ILoginForm = {
-	email: '',
+	username: '',
 	password: '',
 }
 
@@ -47,10 +47,7 @@ export function LoginForm() {
 				toast.error('Something went wrong. Try again later')
 			})
 
-		setValues({
-			email: '',
-			password: '',
-		})
+		setValues(defaultValues)
 	}
 
 	const toggleVisibility = () => setIsVisible(!isVisible)
@@ -66,12 +63,12 @@ export function LoginForm() {
 			<form onSubmit={handleSubmit} className='w-full flex flex-col gap-[16px]'>
 				<Input
 					onChange={handleChange}
-					value={formValues.email}
-					type='email'
-					name='email'
+					value={formValues.username}
+					type='text'
+					name='username'
 					required
 					variant='underlined'
-					label='Email'
+					label='Username'
 				/>
 
 				<Input

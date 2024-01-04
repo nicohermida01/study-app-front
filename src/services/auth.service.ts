@@ -1,16 +1,5 @@
 import api from 'httpclients/api'
-
-interface IRegisterAuthDto {
-	firstName: string
-	lastName: string
-	email: string
-	password: string
-}
-
-interface ILoginAuthDto {
-	email: string
-	password: string
-}
+import { ILoginAuthDto, IRegisterAuthDto } from 'interfaces/auth.interface'
 
 const registerUser = async (dto: IRegisterAuthDto) => {
 	const res = await api.post('/auth/register', dto)

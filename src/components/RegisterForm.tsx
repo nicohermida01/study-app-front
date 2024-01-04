@@ -14,11 +14,13 @@ interface IRegisterForm {
 	email: string
 	firstName: string
 	lastName: string
+	username: string
 }
 
 const defaultValues: IRegisterForm = {
 	firstName: '',
 	lastName: '',
+	username: '',
 	email: '',
 	password: '',
 }
@@ -81,6 +83,16 @@ export function RegisterForm() {
 						label='Last name'
 					/>
 				</fieldset>
+
+				<Input
+					onChange={handleChange}
+					value={formValues.username}
+					type='text'
+					name='username'
+					isRequired
+					variant='underlined'
+					label='Username'
+				/>
 
 				<Input
 					onChange={handleChange}
