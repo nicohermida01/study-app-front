@@ -9,6 +9,7 @@ import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { EyeIcon } from 'components/icons/EyeIcon'
 import { GoogleAuth } from 'components/GoogleAuth'
 import { toast } from 'sonner'
+import { useError } from 'hooks/useError'
 
 interface ILoginForm {
 	username: string
@@ -25,6 +26,7 @@ export function LoginForm() {
 	const [isVisible, setIsVisible] = useState<boolean>(false)
 
 	const router = useRouter()
+	const { handleError } = useError()
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
 		setValues({ ...formValues, [e.target.name]: e.target.value })
@@ -36,16 +38,10 @@ export function LoginForm() {
 		authService
 			.loginUser(formValues)
 			.then(res => {
-				toast.success('Successfully logged!', {
-					description: 'Redirecting..',
-				})
+				toast.success(res.message)
 				router.push('/dashboard')
 			})
-			.catch(err => {
-				// move into error wrapper
-				console.error(err)
-				toast.error('Something went wrong. Try again later')
-			})
+			.catch(handleError)
 
 		setValues(defaultValues)
 	}
@@ -66,7 +62,7 @@ export function LoginForm() {
 					value={formValues.username}
 					type='text'
 					name='username'
-					required
+					isRequired
 					variant='underlined'
 					label='Username'
 				/>
@@ -76,7 +72,7 @@ export function LoginForm() {
 					value={formValues.password}
 					type={isVisible ? 'text' : 'password'}
 					name='password'
-					required
+					isRequired
 					variant='underlined'
 					label='Password'
 					endContent={

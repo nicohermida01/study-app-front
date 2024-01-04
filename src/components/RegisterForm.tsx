@@ -5,6 +5,7 @@ import { GoogleAuth } from 'components/GoogleAuth'
 import { EyeIcon } from 'components/icons/EyeIcon'
 import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { StudyLogo } from 'components/icons/StudyLogo'
+import { useError } from 'hooks/useError'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { authService } from 'services/auth.service'
 import { toast } from 'sonner'
@@ -29,6 +30,8 @@ export function RegisterForm() {
 	const [formValues, setValues] = useState<IRegisterForm>(defaultValues)
 	const [isVisible, setIsVisible] = useState<boolean>(false)
 
+	const { handleError } = useError()
+
 	const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
 		setValues({ ...formValues, [e.target.name]: e.target.value })
 	}
@@ -38,15 +41,8 @@ export function RegisterForm() {
 
 		authService
 			.registerUser(formValues)
-			.then(res => {
-				// toast
-				toast.success('User successfully created!')
-			})
-			.catch(err => {
-				// move into error wrapper
-				console.error(err)
-				toast.error('Something went wrong. Try again later')
-			})
+			.then(res => toast.success(res.message))
+			.catch(handleError)
 
 		setValues(defaultValues)
 	}
