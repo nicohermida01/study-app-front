@@ -7,6 +7,7 @@ import {
 	DropdownTrigger,
 	User,
 } from '@nextui-org/react'
+import Link from 'next/link'
 
 import { useRouter } from 'next/navigation'
 import { authService } from 'services/auth.service'
@@ -53,8 +54,10 @@ export function UserDropdown({
 
 			<DropdownMenu aria-label='User Actions' variant='flat'>
 				<DropdownItem key='profile' className='h-14 gap-2'>
-					<p className='font-bold'>Signed in as</p>
-					<p className='font-bold'>{username}</p>
+					<Link href='/profile'>
+						<p className='font-bold'>Signed in as</p>
+						<p className='font-bold'>{username}</p>
+					</Link>
 				</DropdownItem>
 
 				<DropdownItem key='logout' color='danger' onClick={handleLogout}>
