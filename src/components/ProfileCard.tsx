@@ -1,14 +1,21 @@
 'use client'
 
-import { Avatar, Chip } from '@nextui-org/react'
+import { Avatar, Chip, Input } from '@nextui-org/react'
 import { Card } from 'components/Card'
 
 interface IProfileCardProps {
 	name: string
 	username: string
+	email: string
+	nationality: string
 }
 
-export function ProfileCard({ name, username }: IProfileCardProps) {
+export function ProfileCard({
+	name,
+	username,
+	email,
+	nationality,
+}: IProfileCardProps) {
 	return (
 		<Card containerStyles='flex flex-col items-center gap-[16px]'>
 			<Avatar
@@ -23,9 +30,14 @@ export function ProfileCard({ name, username }: IProfileCardProps) {
 					{username}
 				</Chip>
 
-				<Chip color='primary' variant='solid' className='text-xs'>
+				<Chip color='primary' variant='flat' className='text-xs'>
 					Student
 				</Chip>
+			</div>
+
+			<div className='w-full flex flex-col gap-[16px]'>
+				<Input type='email' label='Email' value={email} isReadOnly />
+				<Input type='text' label='Nationality' value={nationality} isReadOnly />
 			</div>
 		</Card>
 	)

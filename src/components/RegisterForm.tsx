@@ -1,14 +1,16 @@
 'use client'
 
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 import { GoogleAuth } from 'components/GoogleAuth'
 import { EyeIcon } from 'components/icons/EyeIcon'
 import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { StudyLogo } from 'components/icons/StudyLogo'
+import { useCountryList } from 'hooks/useCountriesList'
 import { useError } from 'hooks/useError'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { authService } from 'services/auth.service'
 import { toast } from 'sonner'
+import { useInfiniteScroll } from '@nextui-org/use-infinite-scroll'
 
 interface IRegisterForm {
 	password: string
@@ -29,6 +31,15 @@ const defaultValues: IRegisterForm = {
 export function RegisterForm() {
 	const [formValues, setValues] = useState<IRegisterForm>(defaultValues)
 	const [isVisible, setIsVisible] = useState<boolean>(false)
+	const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
+	const countryList = useCountryList({ fetchDelay: 1500 })
+
+	const [, scrollRef] = useInfiniteScroll({
+		hasMore: countryList.hasMore,
+		isEnabled: isOpenSelect,
+		shouldUseLoader: false,
+		onLoadMore: countryList.onLoadMore,
+	})
 
 	const { handleError } = useError()
 
@@ -41,10 +52,11 @@ export function RegisterForm() {
 
 		authService
 			.registerUser(formValues)
-			.then(res => toast.success(res.message))
+			.then(res => {
+				toast.success(res.message)
+				setValues(defaultValues)
+			})
 			.catch(handleError)
-
-		setValues(defaultValues)
 	}
 
 	const toggleVisibility = () => setIsVisible(!isVisible)
@@ -126,6 +138,22 @@ export function RegisterForm() {
 						</button>
 					}
 				/>
+
+				<Select
+					label='Nationality'
+					variant='underlined'
+					scrollRef={scrollRef}
+					selectionMode='single'
+					onOpenChange={setIsOpenSelect}
+					isLoading={countryList.isLoading}
+					items={countryList.items}
+				>
+					{item => (
+						<SelectItem key={item} className='capitalize'>
+							{item}
+						</SelectItem>
+					)}
+				</Select>
 
 				<Button
 					variant='solid'

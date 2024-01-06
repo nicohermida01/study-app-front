@@ -17,8 +17,8 @@ export function Sidebar() {
 					icon={<DashboardIcon height={iconSize} width={iconSize} />}
 				/>
 				<NavbarItem
-					href='/rooms'
-					text='Rooms'
+					href='/classrooms'
+					text='Classrooms'
 					icon={<ClassroomIcon height={iconSize} width={iconSize} />}
 				/>
 				<NavbarItem
