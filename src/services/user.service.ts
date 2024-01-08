@@ -7,6 +7,7 @@ const me = async (): Promise<IUser> => {
 
 	const res = await api.get('/users/me', {
 		headers: { Authorization: `Bearer ${accessToken}` },
+		cache: false,
 	})
 
 	return res.data
@@ -17,6 +18,7 @@ const getNationality = async (): Promise<string> => {
 
 	const res = await api.get('/users/nationality', {
 		headers: { Authorization: `Bearer ${accessToken}` },
+		cache: false,
 	})
 
 	return res.data

@@ -33,15 +33,7 @@ export default function RootLayout({
 		<html lang='en' className={sansationFont.className}>
 			<body className='h-screen w-full'>
 				<Providers>
-					<NextTopLoader
-						color='#34B1E6'
-						crawlSpeed={200}
-						height={3}
-						crawl={true}
-						showSpinner={true}
-						easing='ease'
-						speed={200}
-					/>
+					<NextTopLoader color='#34B1E6' />
 					{children}
 					<Toaster expand visibleToasts={3} position='top-center' richColors />
 				</Providers>

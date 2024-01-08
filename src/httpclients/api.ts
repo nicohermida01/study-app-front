@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { setupCache } from 'axios-cache-interceptor'
 
 const API_URL = 'http://localhost:8000/api'
 
@@ -9,4 +10,6 @@ const axiosInstance = axios.create({
 	withCredentials: true,
 })
 
-export default axiosInstance
+const instanceWithCache = setupCache(axiosInstance)
+
+export default instanceWithCache

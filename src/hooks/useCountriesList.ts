@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import { nationalitiesService } from 'services/nationalities.service'
 import { useError } from './useError'
+import { INationality } from 'interfaces/nationality.interface'
 
 interface IUseContryListReturn {
-	items: string[] | []
+	items: INationality[] | []
 	hasMore: boolean
 	isLoading: boolean
 	onLoadMore: () => void
 }
 
 export function useCountryList({ fetchDelay = 0 }): IUseContryListReturn {
-	const [items, setItems] = useState<string[] | []>([])
+	const [items, setItems] = useState<INationality[] | []>([])
 	const [hasMore, setHasMore] = useState<boolean>(true)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [offset, setOffset] = useState<number>(0)
@@ -31,10 +32,16 @@ export function useCountryList({ fetchDelay = 0 }): IUseContryListReturn {
 			}
 
 			nationalitiesService
-				.getNationalitiesWithPagination()
+				.getNationalitiesWithPagination(
+					{
+						offset: currentOffset,
+						limit,
+					},
+					signal
+				)
 				.then(res => {
-					setHasMore(res.next !== null)
-					setItems(prevItems => [...prevItems, ...res.results])
+					setHasMore(res.nextPage !== null)
+					setItems(prevItems => [...prevItems, ...res.docs])
 				})
 				.catch(handleError)
 		} catch (err) {

@@ -39,7 +39,7 @@ export function LoginForm() {
 			.loginUser(formValues)
 			.then(res => {
 				toast.success(res.message)
-				router.push('/dashboard')
+				router.push('/dashboard', {})
 			})
 			.catch(handleError)
 

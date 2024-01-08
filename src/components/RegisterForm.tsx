@@ -18,6 +18,7 @@ interface IRegisterForm {
 	firstName: string
 	lastName: string
 	username: string
+	nationality: string
 }
 
 const defaultValues: IRegisterForm = {
@@ -26,6 +27,7 @@ const defaultValues: IRegisterForm = {
 	username: '',
 	email: '',
 	password: '',
+	nationality: '',
 }
 
 export function RegisterForm() {
@@ -45,6 +47,10 @@ export function RegisterForm() {
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
 		setValues({ ...formValues, [e.target.name]: e.target.value })
+	}
+
+	const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = e => {
+		setValues({ ...formValues, nationality: e.target.value })
 	}
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
@@ -147,10 +153,12 @@ export function RegisterForm() {
 					onOpenChange={setIsOpenSelect}
 					isLoading={countryList.isLoading}
 					items={countryList.items}
+					isRequired
+					onChange={handleSelectChange}
 				>
 					{item => (
-						<SelectItem key={item} className='capitalize'>
-							{item}
+						<SelectItem key={item.id} className='capitalize' value={item.id}>
+							{item.name}
 						</SelectItem>
 					)}
 				</Select>

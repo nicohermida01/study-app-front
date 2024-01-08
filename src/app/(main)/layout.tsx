@@ -2,6 +2,9 @@ import { Sidebar } from 'components/Sidebar'
 import { Topbar } from 'components/Topbar'
 import { userService } from 'services/user.service'
 
+export const revalidate = 3600
+export const dynamic = 'force-dynamic'
+
 export default async function DashboardLayout({
 	children,
 }: {
