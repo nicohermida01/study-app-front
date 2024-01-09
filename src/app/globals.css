@@ -30,6 +30,16 @@ body {
 		grid-template-rows: auto 1fr;
 	}
 
+	.dashboardPageLayout {
+		display: grid;
+		grid-template-areas:
+			'a b'
+			'a c';
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		grid-gap: 32px;
+	}
+
 	.mainContainer {
 		box-shadow: inset 15px 15px 5px -10px rgba(0, 0, 0, 0.05);
 	}

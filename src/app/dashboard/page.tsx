@@ -9,9 +9,12 @@ export default async function DashboardPage() {
 	const session = await getServerSession(authOptions)
 
 	return (
-		<>
-			<h1>Dashboard</h1>
-			<p>{`Hello ${session?.user.firstName} ${session?.user.lastName}`}</p>
-		</>
+		<div className='w-full h-full dashboardPageLayout '>
+			<div className='[grid-area:a] bg-slate-400'>Classrooms</div>
+
+			<div className='[grid-area:b] bg-green-400'>Calendar</div>
+
+			<div className='[grid-area:c] bg-blue-300'>Friends</div>
+		</div>
 	)
 }

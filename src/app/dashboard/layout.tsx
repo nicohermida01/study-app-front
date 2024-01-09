@@ -22,7 +22,7 @@ export default async function DashboardLayout({
 			<Topbar user={user} />
 			<Sidebar />
 			<div className='[grid-area:main] w-full mainContainer'>
-				<main className='max-w-[1800px] mx-auto w-full p-[32px] '>
+				<main className='max-w-[1800px] mx-auto w-full p-[32px] h-full'>
 					{children}
 				</main>
 			</div>
