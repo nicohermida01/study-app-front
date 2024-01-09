@@ -1,7 +1,7 @@
 import { NavbarItem } from 'components/NavbarItem'
 import { DashboardIcon } from './icons/DashboardIcon'
 import { ClassroomIcon } from './icons/ClassroomIcon'
-import { FriendsIcon } from './icons/FriendsIcon'
+import { ContactsIcon } from './icons/ContactsIcon'
 import { MessageIcon } from './icons/MessageIcon'
 import { CalendarIcon } from './icons/CalendarIcon'
 
@@ -22,9 +22,9 @@ export function Sidebar() {
 					icon={<ClassroomIcon height={iconSize} width={iconSize} />}
 				/>
 				<NavbarItem
-					href='/dashboard/friends'
-					text='Friends'
-					icon={<FriendsIcon height={iconSize} width={iconSize} />}
+					href='/dashboard/contacts'
+					text='Contacts'
+					icon={<ContactsIcon height={iconSize} width={iconSize} />}
 				/>
 				<NavbarItem
 					href='/dashboard/messages'

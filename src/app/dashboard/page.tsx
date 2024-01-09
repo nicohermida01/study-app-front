@@ -14,7 +14,7 @@ export default async function DashboardPage() {
 
 			<div className='[grid-area:b] bg-green-400'>Calendar</div>
 
-			<div className='[grid-area:c] bg-blue-300'>Friends</div>
+			<div className='[grid-area:c] bg-blue-300'>Contacts</div>
 		</div>
 	)
 }
