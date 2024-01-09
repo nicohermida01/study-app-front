@@ -1,6 +1,8 @@
 import api from 'httpclients/api'
-import { ILoginAuthDto, IRegisterAuthDto } from 'interfaces/auth.interface'
+import { ILoginDto, IRegisterAuthDto } from 'interfaces/auth.interface'
 import { IUser } from 'interfaces/user.interface'
+import { JWT } from 'next-auth/jwt'
+import { getAccessToken } from 'utils/getAccessToken'
 
 interface ISuccessResponse {
 	message: string
@@ -8,6 +10,15 @@ interface ISuccessResponse {
 
 interface IRegisterUserResponse extends ISuccessResponse {
 	user: IUser
+}
+
+const me = async (): Promise<IUser> => {
+	const accessToken = await getAccessToken()
+
+	const res = await api.get('/auth/me', {
+		headers: { Authorization: `Bearer ${accessToken}` },
+	})
+	return res.data
 }
 
 const registerUser = async (
@@ -18,14 +29,15 @@ const registerUser = async (
 	return res.data
 }
 
-const loginUser = async (dto: ILoginAuthDto): Promise<ISuccessResponse> => {
+const loginUser = async (dto: ILoginDto) => {
 	const res = await api.post('/auth/login', dto)
-
 	return res.data
 }
 
-const logoutUser = async () => {
-	const res = await api.get('/auth/logout')
+const refreshToken = async (token: JWT) => {
+	const res = await api.post('/auth/refresh', {
+		headers: { Authorization: `Refresh ${token.backendTokens.refreshToken}` },
+	})
 
 	return res.data
 }
@@ -33,5 +45,6 @@ const logoutUser = async () => {
 export const authService = {
 	registerUser,
 	loginUser,
-	logoutUser,
+	me,
+	refreshToken,
 }

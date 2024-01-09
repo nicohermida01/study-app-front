@@ -1,26 +1,25 @@
 import { Sidebar } from 'components/Sidebar'
 import { Topbar } from 'components/Topbar'
-import { userService } from 'services/user.service'
+import { redirect } from 'next/navigation'
+import { authService } from 'services/auth.service'
 
-export const revalidate = 3600
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600 // revalidate at most every hour
 
 export default async function DashboardLayout({
 	children,
 }: {
 	children: React.ReactNode
 }) {
-	const user = await userService.me()
+	let user = {}
+	try {
+		user = await authService.me()
+	} catch (err) {
+		redirect('/login')
+	}
 
 	return (
 		<section className='bg-bg-light min-h-screen dashboardLayout'>
-			<Topbar
-				userData={{
-					firstName: user.firstName,
-					lastName: user.lastName,
-					username: user.username,
-				}}
-			/>
+			<Topbar user={user} />
 			<Sidebar />
 			<div className='[grid-area:main] w-full mainContainer'>
 				<main className='max-w-[1800px] mx-auto w-full p-[32px] '>

@@ -6,7 +6,7 @@ export interface IRegisterAuthDto {
 	password: string
 }
 
-export interface ILoginAuthDto {
+export interface ILoginDto {
 	username: string
 	password: string
 }

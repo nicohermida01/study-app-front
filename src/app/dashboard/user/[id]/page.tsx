@@ -5,11 +5,15 @@ import { userService } from 'services/user.service'
 export const metadata = {
 	title: 'Study | Profile',
 }
-export const revalidate = 3600
-export const dynamic = 'force-dynamic'
 
-export default async function ProfilePage() {
-	const user = await userService.me()
+type Props = {
+	params: {
+		id: string
+	}
+}
+
+export default async function UserProfilePage(props: Props) {
+	const user = await userService.getUser(props.params.id)
 	const nationality = await userService.getNationality()
 
 	return (

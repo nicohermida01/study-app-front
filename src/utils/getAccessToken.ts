@@ -1,8 +1,7 @@
-import { cookies } from 'next/headers'
+import { authOptions } from 'app/api/auth/[...nextauth]/route'
+import { getServerSession } from 'next-auth'
 
-export function getAccessToken() {
-	const cookieStore = cookies()
-	const token = cookieStore.get('accessToken')
-
-	return token?.value
+export async function getAccessToken() {
+	const session = await getServerSession(authOptions)
+	return session?.backendTokens.accessToken
 }

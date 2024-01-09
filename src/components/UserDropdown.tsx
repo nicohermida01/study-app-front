@@ -7,34 +7,19 @@ import {
 	DropdownTrigger,
 	User,
 } from '@nextui-org/react'
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 
-import { useRouter } from 'next/navigation'
-import { authService } from 'services/auth.service'
-import { toast } from 'sonner'
-
-export interface IUserDropdownProps {
+type Props = {
 	username: string
 	firstName: string
 	lastName: string
+	userId: string
 }
 
-export function UserDropdown({
-	username,
-	firstName,
-	lastName,
-}: IUserDropdownProps) {
-	const router = useRouter()
-
+export function UserDropdown({ username, firstName, lastName, userId }: Props) {
 	const handleLogout = () => {
-		authService
-			.logoutUser()
-			.then(() => router.push('/login'))
-			.catch(err => {
-				// move into error wrapper
-				console.error(err)
-				toast.error('Something went wrong. Try again later')
-			})
+		signOut()
 	}
 
 	return (
@@ -54,7 +39,7 @@ export function UserDropdown({
 
 			<DropdownMenu aria-label='User Actions' variant='flat'>
 				<DropdownItem key='profile' className='h-14 gap-2'>
-					<Link href='/profile'>
+					<Link href={`/dashboard/user/${userId}`}>
 						<p className='font-bold'>Signed in as</p>
 						<p className='font-bold'>{username}</p>
 					</Link>

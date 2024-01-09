@@ -1,19 +1,6 @@
 import api from 'httpclients/api'
 import { INationality } from 'interfaces/nationality.interface'
-
-interface IPaginationResponse<T> {
-	docs: T[]
-	hasNextPage: boolean
-	hasPrevPage: boolean
-	limit: number
-	nextPage: number
-	offset: number
-	page: number
-	pagingCounter: number
-	prevPage: number
-	totalDocs: number
-	totalPages: number
-}
+import { IPaginationResponse } from 'interfaces/pagination.interface'
 
 const getNationalitiesWithPagination = async (
 	queryParams: {

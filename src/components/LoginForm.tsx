@@ -1,15 +1,15 @@
 'use client'
 
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
-import { authService } from 'services/auth.service'
 import { useRouter } from 'next/navigation'
 import { Button, Input } from '@nextui-org/react'
 import { StudyLogo } from 'components/icons/StudyLogo'
 import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { EyeIcon } from 'components/icons/EyeIcon'
 import { GoogleAuth } from 'components/GoogleAuth'
-import { toast } from 'sonner'
 import { useError } from 'hooks/useError'
+import { signIn } from 'next-auth/react'
+import { toast } from 'sonner'
 
 interface ILoginForm {
 	username: string
@@ -35,13 +35,23 @@ export function LoginForm() {
 	const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
 		e.preventDefault()
 
-		authService
-			.loginUser(formValues)
+		signIn('credentials', {
+			...formValues,
+			redirect: false,
+		})
 			.then(res => {
-				toast.success(res.message)
-				router.push('/dashboard', {})
+				if (res?.status === 200) {
+					toast.success('Logged successful')
+					router.push('/dashboard')
+				}
+
+				if (res?.status === 401) {
+					toast.error('Invalid username or password')
+				}
 			})
-			.catch(handleError)
+			.catch(err => {
+				handleError(err)
+			})
 
 		setValues(defaultValues)
 	}

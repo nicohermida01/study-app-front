@@ -17,22 +17,22 @@ export function Sidebar() {
 					icon={<DashboardIcon height={iconSize} width={iconSize} />}
 				/>
 				<NavbarItem
-					href='/classrooms'
+					href='/dashboard/classrooms'
 					text='Classrooms'
 					icon={<ClassroomIcon height={iconSize} width={iconSize} />}
 				/>
 				<NavbarItem
-					href='/friends'
+					href='/dashboard/friends'
 					text='Friends'
 					icon={<FriendsIcon height={iconSize} width={iconSize} />}
 				/>
 				<NavbarItem
-					href='/messages'
+					href='/dashboard/messages'
 					text='Messages'
 					icon={<MessageIcon height={iconSize} width={iconSize} />}
 				/>
 				<NavbarItem
-					href='/calendar'
+					href='/dashboard/calendar'
 					text='Calendar'
 					icon={<CalendarIcon height={iconSize} width={iconSize} />}
 				/>

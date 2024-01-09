@@ -3,15 +3,16 @@
 import { Button } from '@nextui-org/react'
 import { StudyLogo } from 'components/icons/StudyLogo'
 import { MenuIcon } from 'components/icons/MenuIcon'
-import { IUserDropdownProps, UserDropdown } from 'components/UserDropdown'
+import { UserDropdown } from 'components/UserDropdown'
 import { NotificationIcon } from './icons/NotificationICon'
 import { MessageIcon } from './icons/MessageIcon'
+import { IUser } from 'interfaces/user.interface'
 
-interface ITopbarProps {
-	userData: IUserDropdownProps
+type Props = {
+	user: IUser
 }
 
-export function Topbar({ userData }: ITopbarProps) {
+export function Topbar({ user }: Props) {
 	return (
 		<header className='bg-white w-full [grid-area:top] px-[32px] py-[16px] flex justify-between items-center'>
 			<div className='flex items-center gap-[32px]'>
@@ -56,7 +57,12 @@ export function Topbar({ userData }: ITopbarProps) {
 					</Button>
 				</div>
 
-				<UserDropdown {...userData} />
+				<UserDropdown
+					firstName={user?.firstName}
+					lastName={user?.lastName}
+					userId={user?.id}
+					username={user?.username}
+				/>
 			</div>
 		</header>
 	)
