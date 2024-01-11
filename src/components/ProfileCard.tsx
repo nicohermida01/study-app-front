@@ -27,7 +27,7 @@ export function ProfileCard({
 
 			<div className='flex justify-center gap-[8px]'>
 				<Chip color='success' variant='flat' className='text-xs'>
-					{username}
+					{`@${username}`}
 				</Chip>
 
 				<Chip color='primary' variant='flat' className='text-xs'>

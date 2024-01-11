@@ -32,7 +32,7 @@ export function UserDropdown({ username, firstName, lastName, userId }: Props) {
 						src: 'https://images.freeimages.com/images/large-previews/023/geek-avatar-1632962.jpg', // change to user avatar in props
 					}}
 					className='transition-transform'
-					description={username}
+					description={`@${username}`}
 					name={`${firstName} ${lastName}`}
 				/>
 			</DropdownTrigger>
@@ -41,7 +41,7 @@ export function UserDropdown({ username, firstName, lastName, userId }: Props) {
 				<DropdownItem key='profile' className='h-14 gap-2'>
 					<Link href={`/dashboard/user/${userId}`}>
 						<p className='font-bold'>Signed in as</p>
-						<p className='font-bold'>{username}</p>
+						<p className='font-bold'>{`@${username}`}</p>
 					</Link>
 				</DropdownItem>
 

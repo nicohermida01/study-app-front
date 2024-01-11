@@ -1,5 +1,5 @@
 import { ProfileCard } from 'components/ProfileCard'
-import { TeacherQuestionCard } from 'components/TeacherQuestionCard'
+
 import { userService } from 'services/user.service'
 
 export const metadata = {
@@ -24,8 +24,6 @@ export default async function UserProfilePage(props: Props) {
 				email={user.email}
 				nationality={nationality}
 			/>
-
-			<TeacherQuestionCard />
 		</div>
 	)
 }

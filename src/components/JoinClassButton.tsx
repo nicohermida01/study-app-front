@@ -1,7 +1,21 @@
 'use client'
 
-import { Button } from '@nextui-org/react'
+import { Button, Tooltip } from '@nextui-org/react'
+import { JoinClassIcon } from './icons/JoinClassIcon'
 
 export function JoinClassButton() {
-	return <Button color='primary'>Join a class</Button>
+	return (
+		<Tooltip content='Join a class' delay={0} closeDelay={0}>
+			<Button
+				size='md'
+				isIconOnly
+				className='text-light-black'
+				radius='full'
+				aria-label='Join a class'
+				variant='flat'
+			>
+				<JoinClassIcon width={22} height={22} className='stroke-light-black' />
+			</Button>
+		</Tooltip>
+	)
 }
