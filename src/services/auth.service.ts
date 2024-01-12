@@ -12,6 +12,14 @@ interface IRegisterUserResponse extends ISuccessResponse {
 	user: IUser
 }
 
+interface ILoginResponse {
+	user: IUser
+	backendTokens: {
+		accessToken: string
+		refreshToken: string
+	}
+}
+
 const me = async (): Promise<IUser> => {
 	const accessToken = await getAccessToken()
 
@@ -29,15 +37,19 @@ const registerUser = async (
 	return res.data
 }
 
-const loginUser = async (dto: ILoginDto) => {
+const loginUser = async (dto: ILoginDto): Promise<ILoginResponse> => {
 	const res = await api.post('/auth/login', dto)
 	return res.data
 }
 
-const refreshToken = async (token: JWT) => {
-	const res = await api.post('/auth/refresh', {
-		headers: { Authorization: `Refresh ${token.backendTokens.refreshToken}` },
-	})
+const refreshToken = async (token: string) => {
+	const res = await api.post(
+		'/auth/refresh',
+		{},
+		{
+			headers: { Authorization: `Refresh ${token}` },
+		}
+	)
 
 	return res.data
 }

@@ -14,17 +14,14 @@ export const authOptions: NextAuthOptions = {
 			async authorize(credentials, req) {
 				if (!credentials?.username || !credentials.password) return null
 
-				return await authService
-					.loginUser({
-						password: credentials.password,
-						username: credentials.username,
-					})
-					.then(res => {
-						return res
-					})
-					.catch(() => {
-						return null
-					})
+				const loginResponse = await authService.loginUser({
+					password: credentials.password,
+					username: credentials.username,
+				})
+
+				if (loginResponse) return loginResponse
+
+				return null
 			},
 		}),
 	],
@@ -35,7 +32,9 @@ export const authOptions: NextAuthOptions = {
 
 			if (new Date().getTime() < token.backendTokens.expiresIn) return token
 
-			const backendTokens = await authService.refreshToken(token)
+			const backendTokens = await authService.refreshToken(
+				token.backendTokens.refreshToken
+			)
 
 			return {
 				...token,

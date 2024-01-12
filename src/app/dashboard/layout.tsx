@@ -1,29 +1,22 @@
 import { Sidebar } from 'components/Sidebar'
 import { Topbar } from 'components/Topbar'
-import { redirect } from 'next/navigation'
-import { authService } from 'services/auth.service'
+import { useAuthenticate } from 'hooks/useAuthenticate'
+import React from 'react'
 
-export const revalidate = 3600 // revalidate at most every hour
-
-export default async function DashboardLayout({
-	children,
-}: {
+type Props = {
 	children: React.ReactNode
-}) {
-	let user = {}
-	try {
-		user = await authService.me()
-	} catch (err) {
-		redirect('/login')
-	}
+}
+
+export default async function DashboardLayout(props: Props) {
+	const session = await useAuthenticate()
 
 	return (
 		<section className='bg-bg-light min-h-screen dashboardLayout'>
-			<Topbar user={user} />
+			<Topbar user={session.user} />
 			<Sidebar />
 			<div className='[grid-area:main] w-full mainContainer'>
 				<main className='max-w-[1800px] mx-auto w-full p-[32px] h-full'>
-					{children}
+					{props.children}
 				</main>
 			</div>
 		</section>
