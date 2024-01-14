@@ -2,7 +2,8 @@ import api from 'httpclients/api'
 import { ILoginDto, IRegisterAuthDto } from 'interfaces/auth.interface'
 import { IUser } from 'interfaces/user.interface'
 import { JWT } from 'next-auth/jwt'
-import { getAccessToken } from 'utils/getAccessToken'
+import { apiWrapper } from 'lib/apiWrapper'
+import { getAccessToken } from 'lib/getAccessToken'
 
 interface ISuccessResponse {
 	message: string
@@ -12,34 +13,32 @@ interface IRegisterUserResponse extends ISuccessResponse {
 	user: IUser
 }
 
-interface ILoginResponse {
-	user: IUser
-	backendTokens: {
-		accessToken: string
-		refreshToken: string
-	}
-}
-
 const me = async (): Promise<IUser> => {
 	const accessToken = await getAccessToken()
 
-	const res = await api.get('/auth/me', {
-		headers: { Authorization: `Bearer ${accessToken}` },
+	return await apiWrapper(async () => {
+		const res = await api.get('/auth/me', {
+			headers: { Authorization: `Bearer ${accessToken}` },
+		})
+		return res.data
 	})
-	return res.data
 }
 
 const registerUser = async (
 	dto: IRegisterAuthDto
 ): Promise<IRegisterUserResponse> => {
-	const res = await api.post('/auth/register', dto)
+	return await apiWrapper(async () => {
+		const res = await api.post('/auth/register', dto)
 
-	return res.data
+		return res.data
+	})
 }
 
-const loginUser = async (dto: ILoginDto): Promise<ILoginResponse> => {
-	const res = await api.post('/auth/login', dto)
-	return res.data
+const loginUser = async (dto: ILoginDto) => {
+	return await apiWrapper(async () => {
+		const res = await api.post('/auth/login', dto)
+		return res.data
+	})
 }
 
 const refreshToken = async (token: string) => {

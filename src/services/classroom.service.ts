@@ -1,14 +1,31 @@
-import { ICreateClassroomDto } from 'interfaces/classroom.interface'
+import { IClassroom, ICreateClassroomDto } from 'interfaces/classroom.interface'
 import api from 'httpclients/api'
+import { getAccessToken } from 'lib/getAccessToken'
+import { apiWrapper } from 'lib/apiWrapper'
+
+const getAllForRelatedUser = async (userId: string): Promise<IClassroom[]> => {
+	const accessToken = await getAccessToken()
+
+	return await apiWrapper(async () => {
+		const res = await api.get(`/classrooms/user/${userId}`, {
+			headers: { Authorization: `Bearer ${accessToken}` },
+		})
+
+		return res.data
+	})
+}
 
 const create = async (data: ICreateClassroomDto, accessToken: string) => {
-	const res = await api.post('/classrooms', data, {
-		headers: { Authorization: `Bearer ${accessToken}` },
-	})
+	return await apiWrapper(async () => {
+		const res = await api.post('/classrooms', data, {
+			headers: { Authorization: `Bearer ${accessToken}` },
+		})
 
-	return res.data
+		return res.data
+	})
 }
 
 export const classroomService = {
 	create,
+	getAllForRelatedUser,
 }

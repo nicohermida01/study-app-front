@@ -1,6 +1,7 @@
 import api from 'httpclients/api'
 import { INationality } from 'interfaces/nationality.interface'
 import { IPaginationResponse } from 'interfaces/pagination.interface'
+import { apiWrapper } from 'lib/apiWrapper'
 
 const getNationalitiesWithPagination = async (
 	queryParams: {
@@ -9,12 +10,14 @@ const getNationalitiesWithPagination = async (
 	},
 	signalObject: AbortSignal
 ): Promise<IPaginationResponse<INationality>> => {
-	const res = await api.get('/nationalities/pagination', {
-		signal: signalObject,
-		params: queryParams,
-	})
+	return await apiWrapper(async () => {
+		const res = await api.get('/nationalities/pagination', {
+			signal: signalObject,
+			params: queryParams,
+		})
 
-	return res.data
+		return res.data
+	})
 }
 
 export const nationalitiesService = {

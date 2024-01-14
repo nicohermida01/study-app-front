@@ -47,7 +47,7 @@ body {
 			'class';
 		grid-template-columns: 1fr;
 		grid-template-rows: auto 1fr;
-		grid-gap: 16px;
+		grid-gap: 32px;
 	}
 
 	.mainContainer {

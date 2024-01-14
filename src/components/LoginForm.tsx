@@ -38,20 +38,16 @@ export function LoginForm() {
 		signIn('credentials', {
 			...formValues,
 			redirect: false,
-		})
-			.then(res => {
-				if (res?.status === 200) {
-					toast.success('Logged successful')
-					router.push('/dashboard')
-				}
+		}).then(res => {
+			if (res?.status === 200) {
+				toast.success('Logged successful')
+				router.push('/dashboard')
+			}
 
-				if (res?.status === 401) {
-					toast.error('Invalid username or password')
-				}
-			})
-			.catch(err => {
-				handleError(err)
-			})
+			if (res?.status === 401) {
+				toast.error('Invalid username or password')
+			}
+		})
 
 		setValues(defaultValues)
 	}

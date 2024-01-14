@@ -1,3 +1,4 @@
+import { IBackendTokens } from 'interfaces/backendTokens.interface'
 import { IUser } from 'interfaces/user.interface'
 import NextAuth from 'next-auth'
 
@@ -5,11 +6,9 @@ declare module 'next-auth' {
 	interface Session {
 		user: IUser
 
-		backendTokens: {
-			accessToken: string
-			refreshToken: string
-			expiresIn: number
-		}
+		backendTokens: IBackendTokens
+
+		error?: 'RefreshAccessTokenError'
 	}
 }
 
@@ -19,10 +18,8 @@ declare module 'next-auth/jwt' {
 	interface JWT {
 		user: IUser
 
-		backendTokens: {
-			accessToken: string
-			refreshToken: string
-			expiresIn: number
-		}
+		backendTokens: IBackendTokens
+
+		error?: 'RefreshAccessTokenError'
 	}
 }

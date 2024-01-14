@@ -4,6 +4,7 @@ import { Button, Input } from '@nextui-org/react'
 import { useAccessToken } from 'hooks/useAccessToken'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { teacherService } from 'services/teacher.service'
+import { toast } from 'sonner'
 
 interface ICreateTeacherForm {
 	area: string
@@ -33,9 +34,9 @@ export function CreateTeacherForm(props: Props) {
 
 		teacherService
 			.create(formValues, accessToken)
-			.then(res => {
-				console.log('are you a professor!')
-				console.log(res)
+			.then(() => {
+				toast.success('Now you are a teacher')
+				props.onClose()
 			})
 			.catch()
 	}

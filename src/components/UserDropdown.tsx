@@ -19,7 +19,7 @@ type Props = {
 
 export function UserDropdown({ username, firstName, lastName, userId }: Props) {
 	const handleLogout = () => {
-		signOut()
+		signOut({ callbackUrl: '/login' })
 	}
 
 	return (

@@ -11,6 +11,7 @@ import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { authService } from 'services/auth.service'
 import { toast } from 'sonner'
 import { useInfiniteScroll } from '@nextui-org/use-infinite-scroll'
+import { IRegisterAuthDto } from 'interfaces/auth.interface'
 
 interface IRegisterForm {
 	password: string
@@ -19,6 +20,7 @@ interface IRegisterForm {
 	lastName: string
 	username: string
 	nationality: string
+	dateOfBirth: string
 }
 
 const defaultValues: IRegisterForm = {
@@ -28,6 +30,7 @@ const defaultValues: IRegisterForm = {
 	email: '',
 	password: '',
 	nationality: '',
+	dateOfBirth: '',
 }
 
 export function RegisterForm() {
@@ -56,8 +59,18 @@ export function RegisterForm() {
 	const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
 		e.preventDefault()
 
+		const dto: IRegisterAuthDto = {
+			firstName: formValues.firstName,
+			lastName: formValues.lastName,
+			username: formValues.username,
+			email: formValues.email,
+			password: formValues.password,
+			dateOfBirth: new Date(formValues.dateOfBirth),
+			nationalityId: formValues.nationality,
+		}
+
 		authService
-			.registerUser(formValues)
+			.registerUser(dto)
 			.then(res => {
 				toast.success(res.message)
 				setValues(defaultValues)
@@ -68,7 +81,7 @@ export function RegisterForm() {
 	const toggleVisibility = () => setIsVisible(!isVisible)
 
 	return (
-		<div className='w-[400px] flex flex-col items-center'>
+		<div className='w-[600px] flex flex-col items-center'>
 			<StudyLogo width={250} height={70} />
 
 			<h2 className='text-primary text-2xl font-bold my-[32px]'>
@@ -98,70 +111,85 @@ export function RegisterForm() {
 					/>
 				</fieldset>
 
-				<Input
-					onChange={handleChange}
-					value={formValues.username}
-					type='text'
-					name='username'
-					isRequired
-					variant='underlined'
-					label='Username'
-				/>
+				<fieldset className='flex gap-[16px]'>
+					<Input
+						onChange={handleChange}
+						value={formValues.username}
+						type='text'
+						name='username'
+						isRequired
+						variant='underlined'
+						label='Username'
+					/>
+
+					<Input
+						onChange={handleChange}
+						value={formValues.email}
+						type='email'
+						name='email'
+						isRequired
+						variant='underlined'
+						label='Email'
+					/>
+				</fieldset>
+
+				<fieldset className='flex gap-[16px]'>
+					<Input
+						onChange={handleChange}
+						value={formValues.password}
+						type={isVisible ? 'text' : 'password'}
+						name='password'
+						isRequired
+						variant='underlined'
+						label='Password'
+						endContent={
+							<button type='button' onClick={toggleVisibility}>
+								{isVisible ? (
+									<EyeSlashIcon
+										height='16'
+										width='16'
+										className='pointer-events-none stroke-slate-400'
+									/>
+								) : (
+									<EyeIcon
+										height='16'
+										width='16'
+										className='pointer-events-none stroke-slate-400'
+									/>
+								)}
+							</button>
+						}
+					/>
+
+					<Select
+						label='Nationality'
+						variant='underlined'
+						scrollRef={scrollRef}
+						selectionMode='single'
+						onOpenChange={setIsOpenSelect}
+						isLoading={countryList.isLoading}
+						items={countryList.items}
+						isRequired
+						onChange={handleSelectChange}
+					>
+						{item => (
+							<SelectItem key={item.id} className='capitalize' value={item.id}>
+								{item.name}
+							</SelectItem>
+						)}
+					</Select>
+				</fieldset>
 
 				<Input
 					onChange={handleChange}
-					value={formValues.email}
-					type='email'
-					name='email'
+					value={formValues.dateOfBirth}
+					type='date'
+					name='dateOfBirth'
 					isRequired
 					variant='underlined'
-					label='Email'
+					label='Date of birth'
+					placeholder='a'
 				/>
-
-				<Input
-					onChange={handleChange}
-					value={formValues.password}
-					type={isVisible ? 'text' : 'password'}
-					name='password'
-					isRequired
-					variant='underlined'
-					label='Password'
-					endContent={
-						<button type='button' onClick={toggleVisibility}>
-							{isVisible ? (
-								<EyeSlashIcon
-									height='16'
-									width='16'
-									className='pointer-events-none stroke-slate-400'
-								/>
-							) : (
-								<EyeIcon
-									height='16'
-									width='16'
-									className='pointer-events-none stroke-slate-400'
-								/>
-							)}
-						</button>
-					}
-				/>
-
-				<Select
-					label='Nationality'
-					variant='underlined'
-					scrollRef={scrollRef}
-					selectionMode='single'
-					onOpenChange={setIsOpenSelect}
-					isLoading={countryList.isLoading}
-					items={countryList.items}
-					isRequired
-					onChange={handleSelectChange}
-				>
-					{item => (
-						<SelectItem key={item.id} className='capitalize' value={item.id}>
-							{item.name}
-						</SelectItem>
-					)}
-				</Select>
 
 				<Button
 					variant='solid'

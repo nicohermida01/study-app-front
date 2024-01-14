@@ -1,13 +1,15 @@
+'server only'
+
 import { authOptions } from 'app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 
-export async function useAuthenticate() {
+export const getAccessToken = async () => {
 	const session = await getServerSession(authOptions)
 
-	if (!session?.user) {
+	if (!session) {
 		redirect('/login')
 	}
 
-	return session
+	return session.backendTokens.access_token
 }

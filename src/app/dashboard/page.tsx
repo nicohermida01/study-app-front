@@ -1,13 +1,8 @@
-import { authOptions } from 'app/api/auth/[...nextauth]/route'
-import { getServerSession } from 'next-auth'
-
 export const metadata = {
 	title: 'Study | Dashboard',
 }
 
 export default async function DashboardPage() {
-	const session = await getServerSession(authOptions)
-
 	return (
 		<div className='w-full h-full dashboardPageLayout '>
 			<div className='[grid-area:a] bg-slate-400'>Classrooms</div>

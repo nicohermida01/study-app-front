@@ -32,12 +32,9 @@ export function CreateClassroomForm(props: Props) {
 	const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
 		e.preventDefault()
 
-		classroomService
-			.create(formValues, accessToken)
-			.then(res => {
-				setClassroomCode(res)
-			})
-			.catch()
+		classroomService.create(formValues, accessToken).then(res => {
+			setClassroomCode(res)
+		})
 	}
 
 	return (

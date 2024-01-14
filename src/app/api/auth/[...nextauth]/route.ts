@@ -30,21 +30,26 @@ export const authOptions: NextAuthOptions = {
 		async jwt({ token, user }) {
 			if (user) return { ...token, ...user }
 
-			if (new Date().getTime() < token.backendTokens.expiresIn) return token
+			if (new Date().getTime() < token.backendTokens.expires_at) return token
 
-			const backendTokens = await authService.refreshToken(
-				token.backendTokens.refreshToken
-			)
+			try {
+				const backendTokens = await authService.refreshToken(
+					token.backendTokens.refresh_token
+				)
 
-			return {
-				...token,
-				backendTokens,
+				return {
+					...token,
+					backendTokens,
+				}
+			} catch (error) {
+				return { ...token, error: 'RefreshAccessTokenError' as const }
 			}
 		},
 
 		async session({ token, session }) {
 			session.user = token.user
 			session.backendTokens = token.backendTokens
+			session.error = token.error
 
 			return session
 		},

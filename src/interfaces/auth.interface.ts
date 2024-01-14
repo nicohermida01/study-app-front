@@ -4,6 +4,8 @@ export interface IRegisterAuthDto {
 	username: string
 	email: string
 	password: string
+	dateOfBirth: Date
+	nationalityId: string
 }
 
 export interface ILoginDto {
