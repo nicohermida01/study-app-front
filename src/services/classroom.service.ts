@@ -1,9 +1,14 @@
-import { IClassroom, ICreateClassroomDto } from 'interfaces/classroom.interface'
+import {
+	IClassroomCard,
+	ICreateClassroomDto,
+} from 'interfaces/classroom.interface'
 import api from 'httpclients/api'
 import { getAccessToken } from 'lib/getAccessToken'
 import { apiWrapper } from 'lib/apiWrapper'
 
-const getAllForRelatedUser = async (userId: string): Promise<IClassroom[]> => {
+const getAllForRelatedUser = async (
+	userId: string
+): Promise<IClassroomCard[]> => {
 	const accessToken = await getAccessToken()
 
 	return await apiWrapper(async () => {

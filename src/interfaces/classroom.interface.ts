@@ -8,3 +8,10 @@ export interface IClassroom {
 	description: string
 	code: string
 }
+
+export interface IClassroomCard {
+	name: string
+	description: string
+	teacher: string
+	area: string
+}

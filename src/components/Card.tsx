@@ -5,9 +5,7 @@ interface ICardProps {
 
 export function Card({ children, containerStyles }: ICardProps) {
 	return (
-		<div
-			className={`p-[32px] rounded-[8px] shadow-md bg-white w-full ${containerStyles}`}
-		>
+		<div className={` rounded-[8px] shadow-md bg-white ${containerStyles}`}>
 			{children}
 		</div>
 	)

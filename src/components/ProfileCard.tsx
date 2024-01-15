@@ -8,7 +8,7 @@ interface IProps extends IProfileData {}
 
 export function ProfileCard(props: IProps) {
 	return (
-		<Card containerStyles='flex flex-col items-center gap-[16px]'>
+		<Card containerStyles='flex flex-col items-center gap-[16px] p-[32px]'>
 			<Avatar
 				src='https://images.freeimages.com/images/large-previews/023/geek-avatar-1632962.jpg'
 				className='w-28 h-28 text-large'

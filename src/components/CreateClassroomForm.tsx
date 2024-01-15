@@ -4,6 +4,7 @@ import { Button, Chip, Input, Snippet } from '@nextui-org/react'
 import { useAccessToken } from 'hooks/useAccessToken'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { classroomService } from 'services/classroom.service'
+import { useRouter } from 'next/navigation'
 
 interface ICreateClassroomForm {
 	name: string
@@ -20,6 +21,8 @@ type Props = {
 }
 
 export function CreateClassroomForm(props: Props) {
+	const router = useRouter()
+
 	const accessToken = useAccessToken()
 
 	const [classroomCode, setClassroomCode] = useState<string>('')
@@ -34,6 +37,7 @@ export function CreateClassroomForm(props: Props) {
 
 		classroomService.create(formValues, accessToken).then(res => {
 			setClassroomCode(res)
+			router.refresh()
 		})
 	}
 

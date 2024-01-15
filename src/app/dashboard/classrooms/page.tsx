@@ -29,14 +29,9 @@ export default async function ClassroomsPage() {
 
 			<div className='[grid-area:class] flex items-center justify-center'>
 				{!!classrooms && classrooms.length > 0 ? (
-					<div className='h-full w-full flex'>
+					<div className='h-full w-full flex flex-wrap gap-[16px]'>
 						{classrooms.map((item, index) => (
-							<ClassroomCard
-								key={index}
-								area={''}
-								description={item.description}
-								name={item.name}
-							/>
+							<ClassroomCard key={index} {...item} />
 						))}
 					</div>
 				) : (
