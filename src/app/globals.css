@@ -21,6 +21,16 @@ body {
 }
 
 @layer components {
+	.classPageLayout {
+		display: grid;
+		grid-template-areas:
+			'bar class'
+			'content class';
+		grid-template-columns: auto 500px;
+		grid-template-rows: auto 1fr;
+		grid-gap: 16px;
+	}
+
 	.dashboardLayout {
 		display: grid;
 		grid-template-areas:

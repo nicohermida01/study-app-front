@@ -23,7 +23,7 @@ export function UserDropdown({ username, firstName, lastName, userId }: Props) {
 	}
 
 	return (
-		<Dropdown placement='bottom-end'>
+		<Dropdown placement='bottom-end' showArrow>
 			<DropdownTrigger>
 				<User
 					as='button'

@@ -14,4 +14,6 @@ export interface IClassroomCard {
 	description: string
 	teacher: string
 	area: string
+	membersCount: number
+	id: string
 }
