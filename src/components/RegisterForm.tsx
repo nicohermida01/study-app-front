@@ -98,6 +98,9 @@ export function RegisterForm() {
 						isRequired
 						variant='underlined'
 						label='First name'
+						classNames={{
+							inputWrapper: ['rounded-none'],
+						}}
 					/>
 
 					<Input
@@ -108,6 +111,9 @@ export function RegisterForm() {
 						isRequired
 						variant='underlined'
 						label='Last name'
+						classNames={{
+							inputWrapper: ['rounded-none'],
+						}}
 					/>
 				</fieldset>
 
@@ -120,6 +126,9 @@ export function RegisterForm() {
 						isRequired
 						variant='underlined'
 						label='Username'
+						classNames={{
+							inputWrapper: ['rounded-none'],
+						}}
 					/>
 
 					<Input
@@ -130,6 +139,9 @@ export function RegisterForm() {
 						isRequired
 						variant='underlined'
 						label='Email'
+						classNames={{
+							inputWrapper: ['rounded-none'],
+						}}
 					/>
 				</fieldset>
 
@@ -142,6 +154,9 @@ export function RegisterForm() {
 						isRequired
 						variant='underlined'
 						label='Password'
+						classNames={{
+							inputWrapper: ['rounded-none'],
+						}}
 						endContent={
 							<button type='button' onClick={toggleVisibility}>
 								{isVisible ? (
@@ -171,6 +186,9 @@ export function RegisterForm() {
 						items={countryList.items}
 						isRequired
 						onChange={handleSelectChange}
+						classNames={{
+							trigger: ['rounded-none'],
+						}}
 					>
 						{item => (
 							<SelectItem key={item.id} className='capitalize' value={item.id}>
@@ -189,6 +207,9 @@ export function RegisterForm() {
 					variant='underlined'
 					label='Date of birth'
 					placeholder='a'
+					classNames={{
+						inputWrapper: ['rounded-none'],
+					}}
 				/>
 
 				<Button

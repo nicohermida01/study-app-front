@@ -71,6 +71,9 @@ export function LoginForm() {
 					isRequired
 					variant='underlined'
 					label='Username'
+					classNames={{
+						inputWrapper: ['rounded-none'],
+					}}
 				/>
 
 				<Input
@@ -81,6 +84,9 @@ export function LoginForm() {
 					isRequired
 					variant='underlined'
 					label='Password'
+					classNames={{
+						inputWrapper: ['rounded-none'],
+					}}
 					endContent={
 						<button type='button' onClick={toggleVisibility}>
 							{isVisible ? (
