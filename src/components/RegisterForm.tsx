@@ -6,12 +6,12 @@ import { EyeIcon } from 'components/icons/EyeIcon'
 import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { StudyLogo } from 'components/icons/StudyLogo'
 import { useCountryList } from 'hooks/useCountriesList'
-import { useError } from 'hooks/useError'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { authService } from 'services/auth.service'
 import { toast } from 'sonner'
 import { useInfiniteScroll } from '@nextui-org/use-infinite-scroll'
 import { IRegisterAuthDto } from 'interfaces/auth.interface'
+import { DEFAULT_ERROR_MESSAGE } from 'ssot/constants'
 
 interface IRegisterForm {
 	password: string
@@ -46,8 +46,6 @@ export function RegisterForm() {
 		onLoadMore: countryList.onLoadMore,
 	})
 
-	const { handleError } = useError()
-
 	const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
 		setValues({ ...formValues, [e.target.name]: e.target.value })
 	}
@@ -66,7 +64,7 @@ export function RegisterForm() {
 			email: formValues.email,
 			password: formValues.password,
 			dateOfBirth: new Date(formValues.dateOfBirth),
-			nationalityId: formValues.nationality,
+			nationality: formValues.nationality,
 		}
 
 		authService
@@ -75,7 +73,9 @@ export function RegisterForm() {
 				toast.success(res.message)
 				setValues(defaultValues)
 			})
-			.catch(handleError)
+			.catch(() => {
+				toast.error(DEFAULT_ERROR_MESSAGE)
+			})
 	}
 
 	const toggleVisibility = () => setIsVisible(!isVisible)

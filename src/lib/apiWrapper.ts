@@ -3,5 +3,6 @@ export const apiWrapper = async (fn: () => any) => {
 		return await fn()
 	} catch (error: any) {
 		console.error(`Error when try to fetch`, error.response.data)
+		throw new Error(error.response.data.errorCode)
 	}
 }

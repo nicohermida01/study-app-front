@@ -11,7 +11,7 @@ const getNationalitiesWithPagination = async (
 	signalObject: AbortSignal
 ): Promise<IPaginationResponse<INationality>> => {
 	return await apiWrapper(async () => {
-		const res = await api.get('/nationalities/pagination', {
+		const res = await api.get('/nationality/all/pagination', {
 			signal: signalObject,
 			params: queryParams,
 		})
@@ -20,6 +20,6 @@ const getNationalitiesWithPagination = async (
 	})
 }
 
-export const nationalitiesService = {
+export const nationalityService = {
 	getNationalitiesWithPagination,
 }

@@ -9,8 +9,8 @@ import Link from 'next/link'
 type Props = {
 	name: string
 	description: string
-	area: string
-	teacher: string
+	subject: string
+	professor: string
 	id: string
 	membersCount: number
 }
@@ -36,14 +36,14 @@ export function ClassroomCard(props: Props) {
 							className='text-xs bg-blue-100 text-blue-600'
 							size='sm'
 						>
-							{props.area}
+							{props.subject}
 						</Chip>
 						<Chip
 							className='text-xs bg-gray-100 text-gray-600'
 							size='sm'
 							variant='flat'
 						>
-							{props.teacher}
+							{props.professor}
 						</Chip>
 					</div>
 

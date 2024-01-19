@@ -7,9 +7,9 @@ import { StudyLogo } from 'components/icons/StudyLogo'
 import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { EyeIcon } from 'components/icons/EyeIcon'
 import { GoogleAuth } from 'components/GoogleAuth'
-import { useError } from 'hooks/useError'
 import { signIn } from 'next-auth/react'
 import { toast } from 'sonner'
+import { DEFAULT_ERROR_MESSAGE } from 'ssot/constants'
 
 interface ILoginForm {
 	username: string
@@ -26,7 +26,6 @@ export function LoginForm() {
 	const [isVisible, setIsVisible] = useState<boolean>(false)
 
 	const router = useRouter()
-	const { handleError } = useError()
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
 		setValues({ ...formValues, [e.target.name]: e.target.value })
@@ -38,16 +37,18 @@ export function LoginForm() {
 		signIn('credentials', {
 			...formValues,
 			redirect: false,
-		}).then(res => {
-			if (res?.status === 200) {
-				toast.success('Logged successful')
-				router.push('/dashboard')
-			}
-
-			if (res?.status === 401) {
-				toast.error('Invalid username or password')
-			}
 		})
+			.then(res => {
+				if (res?.status === 200) {
+					toast.success('Logged successful')
+					router.push('/dashboard')
+				}
+
+				if (res?.status === 401) {
+					toast.error('Invalid username or password')
+				}
+			})
+			.catch(() => toast.error(DEFAULT_ERROR_MESSAGE))
 
 		setValues(defaultValues)
 	}

@@ -10,7 +10,7 @@ import {
 	useDisclosure,
 } from '@nextui-org/react'
 import { NewIcon } from './icons/NewIcon'
-import { CreateTeacherForm } from './CreateTeacherForm'
+import { CreateProfessorForm } from './CreateTeacherForm'
 import { CreateClassroomForm } from './CreateClassroomForm'
 
 const AllowedContent = () => {
@@ -40,7 +40,7 @@ const NotAllowdContent = () => {
 						</p>
 						<p>Complete the following information to become a teacher!</p>
 
-						<CreateTeacherForm onClose={onClose} />
+						<CreateProfessorForm onClose={onClose} />
 					</ModalBody>
 				</>
 			)}
@@ -63,7 +63,7 @@ export function NewClassModal(props: Props) {
 					isIconOnly
 					className='text-light-black'
 					radius='full'
-					aria-label='Create new class'
+					aria-label='Create new classroom'
 					variant='flat'
 					onPress={onOpen}
 				>

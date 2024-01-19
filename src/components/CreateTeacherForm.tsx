@@ -3,15 +3,15 @@
 import { Button, Input } from '@nextui-org/react'
 import { useAccessToken } from 'hooks/useAccessToken'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
-import { teacherService } from 'services/teacher.service'
+import { professorService } from 'services/professor.service'
 import { toast } from 'sonner'
 
-interface ICreateTeacherForm {
+interface ICreateProfessorForm {
 	area: string
 	education: string
 }
 
-const defaultValues: ICreateTeacherForm = {
+const defaultValues: ICreateProfessorForm = {
 	area: '',
 	education: '',
 }
@@ -20,10 +20,10 @@ type Props = {
 	onClose: () => void
 }
 
-export function CreateTeacherForm(props: Props) {
+export function CreateProfessorForm(props: Props) {
 	const accessToken = useAccessToken()
 
-	const [formValues, setValues] = useState<ICreateTeacherForm>(defaultValues)
+	const [formValues, setValues] = useState<ICreateProfessorForm>(defaultValues)
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
 		setValues({ ...formValues, [e.target.name]: e.target.value })
@@ -32,10 +32,10 @@ export function CreateTeacherForm(props: Props) {
 	const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
 		e.preventDefault()
 
-		teacherService
-			.create(formValues, accessToken)
+		professorService
+			.createOne(formValues, accessToken)
 			.then(() => {
-				toast.success('Now you are a teacher')
+				toast.success('Now you are a professor')
 				props.onClose()
 			})
 			.catch()

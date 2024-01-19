@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { nationalitiesService } from 'services/nationalities.service'
-import { useError } from './useError'
+import { nationalityService } from 'services/nationality.service'
 import { INationality } from 'interfaces/nationality.interface'
+import { toast } from 'sonner'
+import { DEFAULT_ERROR_MESSAGE } from 'ssot/constants'
 
 interface IUseContryListReturn {
 	items: INationality[] | []
@@ -17,8 +18,6 @@ export function useCountryList({ fetchDelay = 0 }): IUseContryListReturn {
 	const [offset, setOffset] = useState<number>(0)
 	const limit = 10
 
-	const { handleError } = useError()
-
 	const loadCountry = async (currentOffset: number) => {
 		const controller = new AbortController()
 		const { signal } = controller
@@ -31,7 +30,7 @@ export function useCountryList({ fetchDelay = 0 }): IUseContryListReturn {
 				await new Promise(resolve => setTimeout(resolve, fetchDelay))
 			}
 
-			nationalitiesService
+			nationalityService
 				.getNationalitiesWithPagination(
 					{
 						offset: currentOffset,
@@ -43,9 +42,9 @@ export function useCountryList({ fetchDelay = 0 }): IUseContryListReturn {
 					setHasMore(res.nextPage !== null)
 					setItems(prevItems => [...prevItems, ...res.docs])
 				})
-				.catch(handleError)
+				.catch(() => toast.error(DEFAULT_ERROR_MESSAGE))
 		} catch (err) {
-			handleError(err)
+			toast.error(DEFAULT_ERROR_MESSAGE)
 		} finally {
 			setIsLoading(false)
 		}
