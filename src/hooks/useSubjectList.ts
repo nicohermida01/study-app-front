@@ -1,24 +1,26 @@
+import { ISubject } from 'interfaces/subject.interface'
 import { useEffect, useState } from 'react'
-import { nationalityService } from 'services/nationality.service'
-import { INationality } from 'interfaces/nationality.interface'
+import { subjectService } from 'services/subject.service'
 import { toast } from 'sonner'
 import { DEFAULT_ERROR_MESSAGE } from 'ssot/constants'
 
-interface IUseContryListOutput {
-	items: INationality[] | []
+type Items = ISubject[] | []
+
+interface IUseSubjectListOutput {
+	items: Items
 	hasMore: boolean
 	isLoading: boolean
 	onLoadMore: () => void
 }
 
-export function useCountryList({ fetchDelay = 0 }): IUseContryListOutput {
-	const [items, setItems] = useState<INationality[] | []>([])
+export function useSubjectList({ fetchDelay = 0 }): IUseSubjectListOutput {
+	const [items, setItems] = useState<Items>([])
 	const [hasMore, setHasMore] = useState<boolean>(true)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [offset, setOffset] = useState<number>(0)
 	const limit = 10
 
-	const loadCountry = async (currentOffset: number) => {
+	const loadSubject = async (currentOffset: number) => {
 		const controller = new AbortController()
 		const { signal } = controller
 
@@ -26,11 +28,10 @@ export function useCountryList({ fetchDelay = 0 }): IUseContryListOutput {
 			setIsLoading(true)
 
 			if (offset > 0) {
-				// Delay to simulate network latency
 				await new Promise(resolve => setTimeout(resolve, fetchDelay))
 			}
 
-			nationalityService
+			subjectService
 				.getAllWithPagination(
 					{
 						offset: currentOffset,
@@ -43,7 +44,7 @@ export function useCountryList({ fetchDelay = 0 }): IUseContryListOutput {
 					setItems(prevItems => [...prevItems, ...res.docs])
 				})
 				.catch(() => toast.error(DEFAULT_ERROR_MESSAGE))
-		} catch (err) {
+		} catch (error) {
 			toast.error(DEFAULT_ERROR_MESSAGE)
 		} finally {
 			setIsLoading(false)
@@ -51,14 +52,14 @@ export function useCountryList({ fetchDelay = 0 }): IUseContryListOutput {
 	}
 
 	useEffect(() => {
-		loadCountry(offset)
+		loadSubject(offset)
 	}, [])
 
 	const onLoadMore = () => {
 		const newOffset = offset + limit
 
 		setOffset(newOffset)
-		loadCountry(newOffset)
+		loadSubject(newOffset)
 	}
 
 	return {

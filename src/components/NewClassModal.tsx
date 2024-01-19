@@ -36,9 +36,9 @@ const NotAllowdContent = () => {
 					<ModalHeader className=''>Are you a professor?</ModalHeader>
 					<ModalBody className='pb-[16px]'>
 						<p>
-							To create a classroom, we need to verify that you are a teacher.
+							To create a classroom, we need to verify that you are a professor.
 						</p>
-						<p>Complete the following information to become a teacher!</p>
+						<p>Complete the following information to become a professor!</p>
 
 						<CreateProfessorForm onClose={onClose} />
 					</ModalBody>
