@@ -8,6 +8,7 @@ export const getAccessToken = async () => {
 	const session = await getServerSession(authOptions)
 
 	if (!session) {
+		console.log('Not session found')
 		redirect('/login')
 	}
 

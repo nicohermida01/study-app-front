@@ -10,8 +10,9 @@ import {
 	useDisclosure,
 } from '@nextui-org/react'
 import { NewIcon } from './icons/NewIcon'
-import { CreateProfessorForm } from './CreateTeacherForm'
+import { CreateProfessorForm } from './CreateProfessorForm'
 import { CreateClassroomForm } from './CreateClassroomForm'
+import { useRouter } from 'next/navigation'
 
 const AllowedContent = () => {
 	return (
@@ -55,6 +56,12 @@ type Props = {
 export function NewClassModal(props: Props) {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
+	const router = useRouter()
+
+	const handleClose = () => {
+		router.refresh()
+	}
+
 	return (
 		<>
 			<Tooltip content='Create new class' delay={0} closeDelay={0}>
@@ -70,7 +77,7 @@ export function NewClassModal(props: Props) {
 					<NewIcon width={22} height={22} className='stroke-light-black' />
 				</Button>
 			</Tooltip>
-			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+			<Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={handleClose}>
 				{props.hasPermissions ? <AllowedContent /> : <NotAllowdContent />}
 			</Modal>
 		</>

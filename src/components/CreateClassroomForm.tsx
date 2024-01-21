@@ -5,15 +5,21 @@ import { useAccessToken } from 'hooks/useAccessToken'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { classroomService } from 'services/classroom.service'
 import { useRouter } from 'next/navigation'
+import { SubjectSelectForClass } from './SubjectSelect'
+import { ICreateClassroomDto } from 'interfaces/classroom.interface'
+import { toast } from 'sonner'
+import { errorMessages } from 'ssot/errorMessages'
 
 interface ICreateClassroomForm {
 	name: string
 	description: string
+	subject: string
 }
 
 const defaultValues: ICreateClassroomForm = {
 	description: '',
 	name: '',
+	subject: '',
 }
 
 type Props = {
@@ -26,19 +32,33 @@ export function CreateClassroomForm(props: Props) {
 	const accessToken = useAccessToken()
 
 	const [classroomCode, setClassroomCode] = useState<string>('')
-	const [formValues, setValues] = useState<ICreateClassroomForm>(defaultValues)
+	const [formValues, setFormValues] =
+		useState<ICreateClassroomForm>(defaultValues)
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
-		setValues({ ...formValues, [e.target.name]: e.target.value })
+		setFormValues({ ...formValues, [e.target.name]: e.target.value })
+	}
+
+	const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = e => {
+		setFormValues({ ...formValues, subject: e.target.value })
 	}
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
 		e.preventDefault()
 
-		classroomService.create(formValues, accessToken).then(res => {
-			setClassroomCode(res)
-			router.refresh()
-		})
+		const dto: ICreateClassroomDto = {
+			name: formValues.name,
+			description: formValues.description,
+			subject: formValues.subject,
+		}
+
+		classroomService
+			.createOne(dto, accessToken)
+			.then(res => {
+				setClassroomCode(res)
+				toast.success('Classroom successfully created!')
+			})
+			.catch(err => toast.error(errorMessages.DEFAULT_ERROR_MESSAGE))
 	}
 
 	return (
@@ -75,6 +95,11 @@ export function CreateClassroomForm(props: Props) {
 						variant='flat'
 						label='Description'
 						size='sm'
+					/>
+
+					<SubjectSelectForClass
+						accessToken={accessToken}
+						onChange={handleSelectChange}
 					/>
 
 					<div className='flex items-center justify-end gap-[16px]'>

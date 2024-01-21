@@ -2,6 +2,8 @@ import { ClassroomCard } from 'components/ClassroomCard'
 import { JoinClassModal } from 'components/JoinClassModal'
 import { NewClassModal } from 'components/NewClassModal'
 import { SearchBox } from 'components/SearchBox'
+import { ICLassroomSerialized } from 'interfaces/classroom.interface'
+import { professorService } from 'services/professor.service'
 import { userService } from 'services/user.service'
 
 export const metadata = {
@@ -12,8 +14,12 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export default async function ClassroomsPage() {
+	let teachesClassrooms: ICLassroomSerialized[] = []
+	const coursesClassrooms = await userService.getCourses()
 	const permissions = await userService.getPermissions()
-	const classrooms = await userService.getClassrooms()
+
+	if (permissions.canCreateClassrooms)
+		teachesClassrooms = await professorService.getTeaches()
 
 	return (
 		<div className='h-full box-border classroomPageLayout'>
@@ -25,25 +31,26 @@ export default async function ClassroomsPage() {
 			</header>
 
 			<div className='[grid-area:class] flex items-center justify-center'>
-				{classrooms.teachesClass && classrooms.teachesClass.length > 0 && (
+				{teachesClassrooms && teachesClassrooms.length > 0 && (
 					<div className='h-full w-full flex flex-wrap gap-[16px]'>
-						{classrooms.teachesClass.map((item, index) => (
+						{teachesClassrooms.map((item, index) => (
 							<ClassroomCard key={index} {...item} />
 						))}
 					</div>
 				)}
 
-				{classrooms.coursesClass && classrooms.coursesClass.length > 0 && (
+				{coursesClassrooms && coursesClassrooms.length > 0 && (
 					<div className='h-full w-full flex flex-wrap gap-[16px]'>
-						{classrooms.coursesClass.map((item, index) => (
+						{coursesClassrooms.map((item, index) => (
 							<ClassroomCard key={index} {...item} />
 						))}
 					</div>
 				)}
 
-				{!classrooms.coursesClass && !classrooms.teachesClass && (
-					<h3 className='font-bold text-lg text-slate-400'>{`~ You haven't joined any class yet ~`}</h3>
-				)}
+				{(!coursesClassrooms || coursesClassrooms.length === 0) &&
+					(!teachesClassrooms || teachesClassrooms.length === 0) && (
+						<h3 className='font-bold text-lg text-slate-400'>{`~ You haven't joined any class yet ~`}</h3>
+					)}
 			</div>
 		</div>
 	)

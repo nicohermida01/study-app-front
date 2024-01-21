@@ -22,7 +22,7 @@ export function ProfileCard(props: IProps) {
 				</Chip>
 
 				<Chip color='primary' variant='flat' className='text-xs'>
-					{props.isTeacher ? 'Teacher' : 'Student'}
+					{props.isProfessor ? 'Professor' : 'Student'}
 				</Chip>
 			</div>
 

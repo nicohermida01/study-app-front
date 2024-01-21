@@ -1,17 +1,16 @@
 'use client'
 
-import { Button, Input, Select, SelectItem } from '@nextui-org/react'
+import { Button, Input } from '@nextui-org/react'
 import { GoogleAuth } from 'components/GoogleAuth'
 import { EyeIcon } from 'components/icons/EyeIcon'
 import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { StudyLogo } from 'components/icons/StudyLogo'
-import { useCountryList } from 'hooks/useCountriesList'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { authService } from 'services/auth.service'
 import { toast } from 'sonner'
-import { useInfiniteScroll } from '@nextui-org/use-infinite-scroll'
 import { IRegisterAuthDto } from 'interfaces/auth.interface'
 import { DEFAULT_ERROR_MESSAGE } from 'ssot/constants'
+import { NationalitySelect } from './NationalitySelect'
 
 interface IRegisterForm {
 	password: string
@@ -35,16 +34,7 @@ const defaultValues: IRegisterForm = {
 
 export function RegisterForm() {
 	const [formValues, setValues] = useState<IRegisterForm>(defaultValues)
-	const [isVisible, setIsVisible] = useState<boolean>(false)
-	const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
-	const countryList = useCountryList({ fetchDelay: 1500 })
-
-	const [, scrollRef] = useInfiniteScroll({
-		hasMore: countryList.hasMore,
-		isEnabled: isOpenSelect,
-		shouldUseLoader: false,
-		onLoadMore: countryList.onLoadMore,
-	})
+	const [passwordVisible, setPasswordVisible] = useState<boolean>(false)
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
 		setValues({ ...formValues, [e.target.name]: e.target.value })
@@ -78,7 +68,7 @@ export function RegisterForm() {
 			})
 	}
 
-	const toggleVisibility = () => setIsVisible(!isVisible)
+	const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible)
 
 	return (
 		<div className='w-[600px] flex flex-col items-center'>
@@ -149,7 +139,7 @@ export function RegisterForm() {
 					<Input
 						onChange={handleChange}
 						value={formValues.password}
-						type={isVisible ? 'text' : 'password'}
+						type={passwordVisible ? 'text' : 'password'}
 						name='password'
 						isRequired
 						variant='underlined'
@@ -158,8 +148,8 @@ export function RegisterForm() {
 							inputWrapper: ['rounded-none'],
 						}}
 						endContent={
-							<button type='button' onClick={toggleVisibility}>
-								{isVisible ? (
+							<button type='button' onClick={togglePasswordVisibility}>
+								{passwordVisible ? (
 									<EyeSlashIcon
 										height='16'
 										width='16'
@@ -176,26 +166,7 @@ export function RegisterForm() {
 						}
 					/>
 
-					<Select
-						label='Nationality'
-						variant='underlined'
-						scrollRef={scrollRef}
-						selectionMode='single'
-						onOpenChange={setIsOpenSelect}
-						isLoading={countryList.isLoading}
-						items={countryList.items}
-						isRequired
-						onChange={handleSelectChange}
-						classNames={{
-							trigger: ['rounded-none'],
-						}}
-					>
-						{item => (
-							<SelectItem key={item.id} className='capitalize' value={item.id}>
-								{item.name}
-							</SelectItem>
-						)}
-					</Select>
+					<NationalitySelect handleChange={handleSelectChange} />
 				</fieldset>
 
 				<Input

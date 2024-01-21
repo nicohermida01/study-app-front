@@ -3,6 +3,6 @@ export interface IProfileData {
 	nationality: string
 	email: string
 	dateOfBirth: string
-	isTeacher: boolean
+	isProfessor: boolean
 	username: string
 }

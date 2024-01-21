@@ -1,16 +1,16 @@
 import api from 'httpclients/api'
+import { ICLassroomSerialized } from 'interfaces/classroom.interface'
 import { IUserPermissions } from 'interfaces/permissions.interface'
 import { IProfileData } from 'interfaces/profileData.interface'
 import { IUser } from 'interfaces/user.interface'
-import { IUserClassrooms } from 'interfaces/userClassrooms.interface'
 import { apiWrapper } from 'lib/apiWrapper'
 import { getAccessToken } from 'lib/getAccessToken'
 
-const getClassrooms = async (): Promise<IUserClassrooms> => {
+const getCourses = async (): Promise<ICLassroomSerialized[]> => {
 	const accessToken = await getAccessToken()
 
 	return apiWrapper(async () => {
-		const res = await api.get('/user/classrooms', {
+		const res = await api.get('/user/courses', {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		})
 
@@ -72,6 +72,6 @@ export const userService = {
 	getUser,
 	getPermissions,
 	getProfileData,
-	getClassrooms,
+	getCourses,
 	createCourse,
 }
