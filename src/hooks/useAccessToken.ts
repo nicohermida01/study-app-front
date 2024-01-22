@@ -1,14 +1,21 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
+import { useEffect } from 'react'
 
 export function useAccessToken() {
-	const { data: session } = useSession()
+	const { data: session, status } = useSession()
 
-	if (!session) {
+	useEffect(() => {
+		if (session?.error === 'RefreshAccessTokenError') {
+			signIn()
+		}
+	}, [session])
+
+	if (status === 'unauthenticated') {
 		redirect('/login')
 	}
 
-	return session.backendTokens.access_token
+	return session?.backendTokens.access_token || ''
 }

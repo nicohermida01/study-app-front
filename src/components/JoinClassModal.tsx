@@ -18,7 +18,7 @@ import { useAccessToken } from 'hooks/useAccessToken'
 import { DEFAULT_ERROR_MESSAGE } from 'ssot/constants'
 import { errorMessages } from 'ssot/errorMessages'
 
-export function JoinClassModal() {
+export async function JoinClassModal() {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure()
 	const [classroomCode, setClassroomCode] = useState<string>('')
 

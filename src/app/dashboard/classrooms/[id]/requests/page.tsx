@@ -1,3 +1,4 @@
+import { CourseRequestCard } from 'components/CourseRequestCard'
 import { classroomService } from 'services/classroom.service'
 
 type Props = {
@@ -17,12 +18,17 @@ export default async function ClassroomRequestsPage(props: Props) {
 		)
 	}
 
-	const requests = await classroomService.getRequests(props.params.id)
+	const courseRequests = await classroomService.getRequests(props.params.id)
 
 	return (
-		<div>
-			{requests.map(item => (
-				<span>requests 1 pendign</span>
+		<div className='flex item-center gap-[16px]'>
+			{courseRequests.map((item, index) => (
+				<CourseRequestCard
+					key={index}
+					name={item.name}
+					username={item.username}
+					courseId={item.courseId}
+				/>
 			))}
 		</div>
 	)

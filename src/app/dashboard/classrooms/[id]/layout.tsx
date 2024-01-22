@@ -37,7 +37,7 @@ export default async function ClassroomLayout(props: Props) {
 					code={classroom.code}
 				/>
 			</aside>
-			<main className='[grid-area:content] bg-slate-100 min-w-[400px]'>
+			<main className='[grid-area:content] bg-slate-100 min-w-[400px] p-[8px]'>
 				{props.children}
 			</main>
 		</section>
