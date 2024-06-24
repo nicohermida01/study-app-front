@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  studyapp:
+    container_name: study-app
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /bin/ash -c "npm run dev"
+    ports:
+      - 3005:3005
+    volumes:
+      - .:/myapp
+      - /myapp/node_modules
+    networks:
+      - study_network
+
+networks:
+  study_network:
+    external: true

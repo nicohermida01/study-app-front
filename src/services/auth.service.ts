@@ -1,7 +1,7 @@
 import api from 'httpclients/api'
 import { ILoginDto, IRegisterAuthDto } from 'interfaces/auth.interface'
 import { IUser } from 'interfaces/user.interface'
-import { JWT } from 'next-auth/jwt'
+
 import { apiWrapper } from 'lib/apiWrapper'
 import { getAccessToken } from 'lib/getAccessToken'
 
@@ -37,6 +37,7 @@ const registerUser = async (
 const loginUser = async (dto: ILoginDto) => {
 	return await apiWrapper(async () => {
 		const res = await api.post('/auth/login', dto)
+
 		return res.data
 	})
 }
