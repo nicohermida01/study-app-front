@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { setupCache } from 'axios-cache-interceptor'
 
-const API_URL = 'http://localhost:8001/api'
+const API_URL = 'http://docker.localhost:8001/api'
 
 axios.defaults.withCredentials = true
 

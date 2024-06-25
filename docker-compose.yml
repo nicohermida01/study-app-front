@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   studyapp:
     container_name: study-app
@@ -15,6 +14,12 @@ services:
       - /myapp/node_modules
     networks:
       - study_network
+    labels:
+      - 'traefik.frontend.rule=Host:localhost'
+      - 'traefik.frontend.priority=1'
+      - 'traefik.basic.port=3005'
+    extra_hosts:
+      - 'docker.localhost:host-gateway'
 
 networks:
   study_network:
