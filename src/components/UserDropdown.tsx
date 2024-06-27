@@ -1,6 +1,7 @@
 'use client'
 
 import {
+	Button,
 	Dropdown,
 	DropdownItem,
 	DropdownMenu,
@@ -25,7 +26,8 @@ export function UserDropdown({ username, firstName, lastName, userId }: Props) {
 	return (
 		<Dropdown placement='bottom-end' showArrow>
 			<DropdownTrigger>
-				<User
+				<Button />
+				{/* <User
 					as='button'
 					avatarProps={{
 						isBordered: true,
@@ -34,7 +36,7 @@ export function UserDropdown({ username, firstName, lastName, userId }: Props) {
 					className='transition-transform'
 					description={`@${username}`}
 					name={`${firstName} ${lastName}`}
-				/>
+				/> */}
 			</DropdownTrigger>
 
 			<DropdownMenu aria-label='User Actions' variant='flat'>
