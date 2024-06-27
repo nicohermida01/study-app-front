@@ -1,5 +1,7 @@
 import { nextui } from '@nextui-org/react'
 
+export const primaryColor = '#34B1E6'
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	important: true,
@@ -16,7 +18,7 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				primary: '#34B1E6',
+				primary: primaryColor,
 				'bg-light': '#F4FAFC',
 				'sidebar-gray': '#888888',
 				'sidebar-active': '#154C63',
@@ -30,7 +32,7 @@ module.exports = {
 			themes: {
 				light: {
 					colors: {
-						primary: '#34B1E6',
+						primary: primaryColor,
 					},
 				},
 			},

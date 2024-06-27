@@ -4,10 +4,10 @@ WORKDIR /myapp
 
 COPY package.json /myapp/package.json
 COPY package-lock.json /myapp/package-lock.json
-RUN npm install
+RUN npm install --legacy-peer-deps
 COPY . /myapp
 
-#RUN npm run build
+RUN npm run build
 EXPOSE 3005
 
 CMD ["npm", "run", "dev"]
