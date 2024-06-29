@@ -41,10 +41,7 @@ export function UserDropdown({ username, firstName, lastName, userId }: Props) {
 
 			<DropdownMenu aria-label='User Actions' variant='flat'>
 				<DropdownItem key='profile' className='h-14 gap-2'>
-					<Link href={`/dashboard/user/${userId}`}>
-						<p className='font-bold'>Signed in as</p>
-						<p className='font-bold'>{`@${username}`}</p>
-					</Link>
+					<Link href={`/dashboard/user/${userId}`}>Profile</Link>
 				</DropdownItem>
 
 				<DropdownItem key='logout' color='danger' onClick={handleLogout}>
