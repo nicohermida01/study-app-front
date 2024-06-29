@@ -1,14 +1,29 @@
 'use client'
 
-import { Avatar, Chip, Input } from '@nextui-org/react'
-import { Card } from 'components/Card'
+import { Avatar, Button, Chip, Input, Tooltip } from '@nextui-org/react'
+
 import { IProfileData } from 'interfaces/profileData.interface'
+import { Card } from 'components/Card'
+import { EditIcon } from 'components/icons/EditIcon'
 
 interface IProps extends IProfileData {}
 
 export function ProfileCard(props: IProps) {
 	return (
-		<Card containerStyles='flex flex-col items-center gap-[16px] p-[32px]'>
+		<Card containerStyles='flex flex-col items-center gap-[16px] p-[32px] relative'>
+			<Tooltip content='Edit profile'>
+				<Button
+					isIconOnly
+					aria-label='edit profile'
+					radius='full'
+					variant='faded'
+					size='sm'
+					className='border-none absolute top-[12px] right-[12px]'
+				>
+					<EditIcon className='h-[16px] stroke-light-black' />
+				</Button>
+			</Tooltip>
+
 			<Avatar
 				src='https://images.freeimages.com/images/large-previews/023/geek-avatar-1632962.jpg'
 				className='w-28 h-28 text-large'
