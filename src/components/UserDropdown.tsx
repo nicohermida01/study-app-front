@@ -26,7 +26,7 @@ export function UserDropdown({ username, firstName, lastName, userId }: Props) {
 	return (
 		<Dropdown placement='bottom-end' showArrow>
 			<DropdownTrigger>
-				<Button />
+				<Button>USER</Button>
 				{/* <User
 					as='button'
 					avatarProps={{
@@ -40,8 +40,13 @@ export function UserDropdown({ username, firstName, lastName, userId }: Props) {
 			</DropdownTrigger>
 
 			<DropdownMenu aria-label='User Actions' variant='flat'>
-				<DropdownItem key='profile' className='h-14 gap-2'>
-					<Link href={`/dashboard/user/${userId}`}>Profile</Link>
+				<DropdownItem
+					key='profile'
+					className='h-14 gap-2'
+					as={Link}
+					href={`/dashboard/user/${userId}`}
+				>
+					Profile
 				</DropdownItem>
 
 				<DropdownItem key='logout' color='danger' onClick={handleLogout}>
