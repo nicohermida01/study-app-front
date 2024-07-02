@@ -45,7 +45,15 @@ export function EditProfileModal(props: EditProfileModalProps) {
 							<ModalBody>
 								<EditProfileForm
 									formId={editProfileFormId}
-									data={{ ...props, nationality: props.nationality.id }}
+									data={{
+										dateOfBirth: props.dateOfBirth,
+										email: props.email,
+										firstName: props.firstName,
+										lastName: props.lastName,
+										nationality: props.nationality.id,
+										username: props.username,
+									}}
+									avatarNum={props.avatarNum}
 									onCloseFn={onClose}
 								/>
 							</ModalBody>

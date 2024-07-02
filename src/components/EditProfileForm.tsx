@@ -8,26 +8,27 @@ import {
 } from 'react'
 import { Avatar, Input } from '@nextui-org/react'
 import { toast } from 'sonner'
+import Image from 'next/image'
 
 import { IProfileData } from 'interfaces/profileData.interface'
 import { UpdateUserDTO } from 'interfaces/user.interface'
 import { NationalitySelect } from 'components/NationalitySelect'
 import { userService } from 'services/user.service'
-import { DEFAULT_ERROR_MESSAGE } from 'ssot/constants'
 import { useAccessToken } from 'hooks/useAccessToken'
-import Image from 'next/image'
+import { DEFAULT_ERROR_MESSAGE } from 'ssot/constants'
+import { Avatars, avatars } from 'ssot/avatars'
 
-const avatars: Avatars[] = ['1', '2', '3', '4', '5', '6', '7']
-
-type Avatars = '1' | '2' | '3' | '4' | '5' | '6' | '7'
-
-type EditProfileForm = Omit<IProfileData, 'isProfessor' | 'nationality'> & {
+type EditProfileForm = Omit<
+	IProfileData,
+	'isProfessor' | 'nationality' | 'avatarNum'
+> & {
 	nationality: string
 }
 
 type EditProfileFormProps = {
 	formId: string
 	data: EditProfileForm
+	avatarNum: Avatars
 	onCloseFn: () => void
 }
 
@@ -43,17 +44,21 @@ const initValues: EditProfileForm = {
 export function EditProfileForm({
 	formId,
 	data,
+	avatarNum,
 	onCloseFn,
 }: EditProfileFormProps) {
 	const [formValues, setFormValues] = useState<EditProfileForm>(initValues)
 	const [updateValues, setUpdateValues] = useState<EditProfileForm>(initValues)
 	const [changedValues, setChangedValues] = useState<boolean>(false)
-	const [selectedAvatar, setSelectedAvatar] = useState<Avatars>('6')
+	const [selectedAvatar, setSelectedAvatar] = useState<Avatars>()
+	const [newAvatarNum, setNewAvatarNum] = useState<Avatars | undefined>()
 
 	const accessToken = useAccessToken()
 
 	useEffect(() => {
 		setFormValues(data)
+		setSelectedAvatar(avatarNum)
+		setNewAvatarNum(undefined)
 		setUpdateValues(initValues)
 		setChangedValues(false)
 	}, [])
@@ -86,6 +91,7 @@ export function EditProfileForm({
 			...(updateValues.dateOfBirth && {
 				dateOfBirth: new Date(updateValues.dateOfBirth),
 			}),
+			...(newAvatarNum && { avatarNum: newAvatarNum }),
 		}
 
 		userService
@@ -100,7 +106,11 @@ export function EditProfileForm({
 	}
 
 	const handleClickAvatar = (elem: Avatars) => {
+		if (elem === selectedAvatar) return
+
 		setSelectedAvatar(elem)
+		setNewAvatarNum(elem)
+		setChangedValues(true)
 	}
 
 	return (
@@ -123,7 +133,7 @@ export function EditProfileForm({
 							alt={`avatar-${elem}`}
 							className={`${
 								elem === selectedAvatar ? 'outline-primary' : ''
-							} outline outline-4 hover:outline-gray-500 transition-all border border-white`}
+							} outline outline-4 hover:outline-gray-500 transition-all border border-white cursor-pointer`}
 							onClick={() => handleClickAvatar(elem)}
 						/>
 					))}

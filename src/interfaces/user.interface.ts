@@ -1,3 +1,5 @@
+import { Avatars } from 'ssot/avatars'
+
 export interface IUser {
 	firstName: string
 	lastName: string
@@ -14,4 +16,5 @@ export type UpdateUserDTO = {
 	email?: string
 	dateOfBirth?: Date
 	nationality?: string
+	avatarNum?: Avatars
 }

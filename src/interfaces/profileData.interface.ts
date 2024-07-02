@@ -1,4 +1,5 @@
 import { INationality } from 'interfaces/nationality.interface'
+import { Avatars } from 'ssot/avatars'
 
 export interface IProfileData {
 	firstName: string
@@ -8,4 +9,5 @@ export interface IProfileData {
 	dateOfBirth: string
 	isProfessor: boolean
 	username: string
+	avatarNum: Avatars
 }

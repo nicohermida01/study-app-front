@@ -16,6 +16,7 @@ export function ProfileCard({
 	dateOfBirth,
 	email,
 	nationality,
+	avatarNum,
 }: IProps) {
 	return (
 		<Card containerStyles='flex flex-col items-center gap-[16px] p-[32px] relative'>
@@ -26,8 +27,12 @@ export function ProfileCard({
 				email={email}
 				dateOfBirth={new Date(dateOfBirth).toISOString().split('T')[0]}
 				nationality={nationality}
+				avatarNum={avatarNum}
 			/>
-			<Avatar src='/avatar-6.jpg' className='w-28 h-28 text-large' />
+			<Avatar
+				src={`/avatar-${avatarNum}.jpg`}
+				className='w-28 h-28 text-large'
+			/>
 
 			<h2 className='font-bold text-2xl'>{`${firstName} ${lastName}`}</h2>
 
