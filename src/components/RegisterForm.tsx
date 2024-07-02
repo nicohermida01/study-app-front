@@ -1,16 +1,18 @@
 'use client'
 
 import { Button, Input } from '@nextui-org/react'
+import { ChangeEventHandler, FormEventHandler, useState } from 'react'
+import { toast } from 'sonner'
+
 import { GoogleAuth } from 'components/GoogleAuth'
 import { EyeIcon } from 'components/icons/EyeIcon'
 import { EyeSlashIcon } from 'components/icons/EyeSlashIcon'
 import { StudyLogo } from 'components/icons/StudyLogo'
-import { ChangeEventHandler, FormEventHandler, useState } from 'react'
+import { NationalitySelect } from 'components/NationalitySelect'
+
 import { authService } from 'services/auth.service'
-import { toast } from 'sonner'
 import { IRegisterAuthDto } from 'interfaces/auth.interface'
 import { DEFAULT_ERROR_MESSAGE } from 'ssot/constants'
-import { NationalitySelect } from './NationalitySelect'
 
 interface IRegisterForm {
 	password: string
@@ -166,7 +168,14 @@ export function RegisterForm() {
 						}
 					/>
 
-					<NationalitySelect handleChange={handleSelectChange} />
+					<NationalitySelect
+						handleChange={handleSelectChange}
+						variant='underlined'
+						styles={{
+							trigger: ['rounded-none'],
+						}}
+						isRequired
+					/>
 				</fieldset>
 
 				<Input

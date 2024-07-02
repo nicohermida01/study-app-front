@@ -6,3 +6,12 @@ export interface IUser {
 	id: string
 	dateOfBirth: string
 }
+
+export type UpdateUserDTO = {
+	firstName?: string
+	lastName?: string
+	username?: string
+	email?: string
+	dateOfBirth?: Date
+	nationality?: string
+}

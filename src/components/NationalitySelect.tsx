@@ -1,15 +1,42 @@
 'use client'
 
-import { Select, SelectItem } from '@nextui-org/react'
+import { Select, SelectItem, SlotsToClasses } from '@nextui-org/react'
 import { useInfiniteScroll } from '@nextui-org/use-infinite-scroll'
 import { useCountryList } from 'hooks/useCountriesList'
 import { ChangeEventHandler, useState } from 'react'
 
-type Props = {
+type NationalitySelectProps = {
 	handleChange: ChangeEventHandler<HTMLSelectElement>
+	isRequired?: boolean
+	selectedKeys?: 'all' | Iterable<any> | undefined
+	variant?: 'underlined' | 'flat' | 'faded' | 'bordered' | undefined
+	styles?:
+		| SlotsToClasses<
+				| 'description'
+				| 'errorMessage'
+				| 'label'
+				| 'base'
+				| 'value'
+				| 'mainWrapper'
+				| 'trigger'
+				| 'innerWrapper'
+				| 'selectorIcon'
+				| 'spinner'
+				| 'listboxWrapper'
+				| 'listbox'
+				| 'popoverContent'
+				| 'helperWrapper'
+		  >
+		| undefined
 }
 
-export function NationalitySelect(props: Props) {
+export function NationalitySelect({
+	handleChange,
+	variant,
+	styles,
+	selectedKeys,
+	isRequired,
+}: NationalitySelectProps) {
 	const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false)
 	const countryList = useCountryList({ fetchDelay: 1500 })
 
@@ -23,17 +50,16 @@ export function NationalitySelect(props: Props) {
 	return (
 		<Select
 			label='Nationality'
-			variant='underlined'
+			variant={variant}
 			scrollRef={scrollRef}
 			selectionMode='single'
 			onOpenChange={setIsOpenSelect}
 			isLoading={countryList.isLoading}
 			items={countryList.items}
-			isRequired
-			onChange={props.handleChange}
-			classNames={{
-				trigger: ['rounded-none'],
-			}}
+			isRequired={isRequired}
+			onChange={handleChange}
+			classNames={styles}
+			selectedKeys={selectedKeys}
 		>
 			{item => (
 				<SelectItem key={item.id} className='capitalize' value={item.id}>

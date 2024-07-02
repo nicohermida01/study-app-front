@@ -1,6 +1,9 @@
+import { INationality } from 'interfaces/nationality.interface'
+
 export interface IProfileData {
-	fullName: string
-	nationality: string
+	firstName: string
+	lastName: string
+	nationality: INationality
 	email: string
 	dateOfBirth: string
 	isProfessor: boolean
