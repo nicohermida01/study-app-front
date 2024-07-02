@@ -27,10 +27,7 @@ export function ProfileCard({
 				dateOfBirth={new Date(dateOfBirth).toISOString().split('T')[0]}
 				nationality={nationality}
 			/>
-			<Avatar
-				src='https://images.freeimages.com/images/large-previews/023/geek-avatar-1632962.jpg'
-				className='w-28 h-28 text-large'
-			/>
+			<Avatar src='/avatar-6.jpg' className='w-28 h-28 text-large' />
 
 			<h2 className='font-bold text-2xl'>{`${firstName} ${lastName}`}</h2>
 

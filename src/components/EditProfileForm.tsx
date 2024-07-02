@@ -6,8 +6,7 @@ import {
 	useEffect,
 	useState,
 } from 'react'
-import { parseDate } from '@internationalized/date'
-import { DateInput, Input } from '@nextui-org/react'
+import { Avatar, Input } from '@nextui-org/react'
 import { toast } from 'sonner'
 
 import { IProfileData } from 'interfaces/profileData.interface'
@@ -16,6 +15,11 @@ import { NationalitySelect } from 'components/NationalitySelect'
 import { userService } from 'services/user.service'
 import { DEFAULT_ERROR_MESSAGE } from 'ssot/constants'
 import { useAccessToken } from 'hooks/useAccessToken'
+import Image from 'next/image'
+
+const avatars: Avatars[] = ['1', '2', '3', '4', '5', '6', '7']
+
+type Avatars = '1' | '2' | '3' | '4' | '5' | '6' | '7'
 
 type EditProfileForm = Omit<IProfileData, 'isProfessor' | 'nationality'> & {
 	nationality: string
@@ -44,6 +48,7 @@ export function EditProfileForm({
 	const [formValues, setFormValues] = useState<EditProfileForm>(initValues)
 	const [updateValues, setUpdateValues] = useState<EditProfileForm>(initValues)
 	const [changedValues, setChangedValues] = useState<boolean>(false)
+	const [selectedAvatar, setSelectedAvatar] = useState<Avatars>('6')
 
 	const accessToken = useAccessToken()
 
@@ -94,8 +99,37 @@ export function EditProfileForm({
 			})
 	}
 
+	const handleClickAvatar = (elem: Avatars) => {
+		setSelectedAvatar(elem)
+	}
+
 	return (
 		<form id={formId} className='flex flex-col gap-4' onSubmit={handleSubmit}>
+			<div className='flex gap-4'>
+				<div className='bg-gray-100 p-6 w-max hover:bg-gray-200 transition-all rounded-xl'>
+					<Avatar
+						src={`/avatar-${selectedAvatar}.jpg`}
+						className='w-28 h-28 text-large'
+					/>
+				</div>
+
+				<div className='flex h-max w-max gap-2'>
+					{avatars.map((elem, i) => (
+						<Image
+							src={`/avatar-${elem}.jpg`}
+							key={i}
+							width={50}
+							height={50}
+							alt={`avatar-${elem}`}
+							className={`${
+								elem === selectedAvatar ? 'outline-primary' : ''
+							} outline outline-4 hover:outline-gray-500 transition-all border border-white`}
+							onClick={() => handleClickAvatar(elem)}
+						/>
+					))}
+				</div>
+			</div>
+
 			<fieldset className='flex gap-4'>
 				<Input
 					label='First name'
