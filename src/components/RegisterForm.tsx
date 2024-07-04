@@ -175,6 +175,7 @@ export function RegisterForm() {
 							trigger: ['rounded-none'],
 						}}
 						isRequired
+						selectedKeys={[`${formValues.nationality}`]}
 					/>
 				</fieldset>
 
