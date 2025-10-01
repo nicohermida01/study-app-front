@@ -1,12 +1,15 @@
 'use client'
 
 import { Button, Chip, Input, Snippet } from '@nextui-org/react'
-import { useAccessToken } from 'hooks/useAccessToken'
+import { useRouter } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
-import { classroomService } from 'services/classroom.service'
-import { SubjectSelectForClass } from './SubjectSelect'
-import { ICreateClassroomDto } from 'interfaces/classroom.interface'
 import { toast } from 'sonner'
+
+import { useAccessToken } from 'hooks/useAccessToken'
+import { classroomService } from 'services/classroom.service'
+import { SubjectSelectForClass } from 'components/SubjectSelect'
+import { ICreateClassroomDto } from 'interfaces/classroom.interface'
 import { errorMessages } from 'ssot/errorMessages'
 
 interface ICreateClassroomForm {
@@ -27,6 +30,7 @@ type Props = {
 
 export function CreateClassroomForm(props: Props) {
 	const accessToken = useAccessToken()
+	const router = useRouter()
 
 	const [classroomCode, setClassroomCode] = useState<string>('')
 	const [formValues, setFormValues] =
@@ -54,6 +58,8 @@ export function CreateClassroomForm(props: Props) {
 			.then(res => {
 				setClassroomCode(res)
 				toast.success('Classroom successfully created!')
+				revalidatePath('/dashboard/classrooms', 'page')
+				router.refresh()
 			})
 			.catch(err => toast.error(errorMessages.DEFAULT_ERROR_MESSAGE))
 	}
